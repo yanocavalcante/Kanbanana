@@ -3,3 +3,6 @@ Desenvolvimento de uma plataforma web cujo objetivo é a organização de tarefa
 
 ## Tecnologias
 Na construção do front-end da plataforma serão utilizadas as seguintes tecnologias: HTML, CSS, JavaScript, com apoio do framework Bootstrap. Para o back-end: Node.js e Express.js e para o banco de dados, MongoDB.
+
+##Membros
+<ul><li>Matheus Steinbach</li><li>Yano Cavalcante</li><li>Iago Muñoz</li><li>Alessandro Thomaz</li><li>Layon Ribeiro</li>
