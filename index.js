@@ -1,8 +1,21 @@
 const express = require('express')
 const app = express()
 
-app.get('/', (req, res) => {
-  res.send('layzin é foda!')
-})
+// ROTA
+    // Method HTTP - CRUD (Create, Read, Update, Delete)
+        //  GET - pegar informações
+        //  POST - criar informações
+        //  PUT - alterar todas as informações
+        // PATCH - alterar algumas informações
+        // DELETE - deletar informações
 
-app.listen(3000)
+    // Name - Um indentificador da Rota
+
+    // Function (Callback) - Responsavel por executar um comando
+app.get('/soma', (req, res) => {
+    const result = 100 + 1;
+    const soma = 2 +2 ;
+    res.send({result : result})
+});
+
+app.listen(3000);
