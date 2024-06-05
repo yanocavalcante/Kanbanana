@@ -1,5 +1,8 @@
 const express = require('express')
 const app = express()
+const userRoute = require('./src/routes/user.route')
+
+app.use("/soma", userRoute);
 
 // ROTA
     // Method HTTP - CRUD (Create, Read, Update, Delete)
@@ -12,10 +15,10 @@ const app = express()
     // Name - Um indentificador da Rota
 
     // Function (Callback) - Responsavel por executar um comando
-app.get('/soma', (req, res) => {
-    const result = 100 + 1;
-    const soma = 2 +2 ;
-    res.send({result : result})
-});
+// app.get('/soma', (req, res) => {
+//     const result = 100 + 1;
+//     const soma = 2 +2 ;
+//     res.send({result : result})
+// });
 
 app.listen(3000);
