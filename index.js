@@ -3,6 +3,9 @@ const app = express()
 const userRoute = require('./src/routes/user.route')
 
 app.use("/soma", userRoute);
+app.use("/subtrai", userRoute);
+app.use("/multiplica", userRoute);
+app.use("/raiz", userRoute);
 
 // ROTA
     // Method HTTP - CRUD (Create, Read, Update, Delete)
