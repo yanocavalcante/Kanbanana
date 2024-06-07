@@ -1,11 +1,10 @@
 const express = require('express')
 const app = express()
 const userRoute = require('./src/routes/user.route')
+const port = 3000
 
-app.use("/soma", userRoute);
-app.use("/subtrai", userRoute);
-app.use("/multiplica", userRoute);
-app.use("/raiz", userRoute);
+app.use(express.json());
+app.use("/user", userRoute);
 
 // ROTA
     // Method HTTP - CRUD (Create, Read, Update, Delete)
@@ -23,5 +22,4 @@ app.use("/raiz", userRoute);
 //     const soma = 2 +2 ;
 //     res.send({result : result})
 // });
-
-app.listen(3000);
+app.listen(port, () => console.log(`Servidor Rodando na porta ${port}`))
