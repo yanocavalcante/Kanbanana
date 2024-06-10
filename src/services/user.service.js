@@ -1,5 +1,5 @@
-    const User = require('../models/User');
-    
+import User from '../models/User.js'
+
     const createService = (body) => User.create(body) // o create é um método do mongoose que cria um novo documento no banco de dados
 
     const findAllService = () => User.find() // o find é um método do mongoose que retorna todos os documentos de uma coleção no banco de dados
@@ -16,7 +16,7 @@
         background
         ) => User.findOneAndUpdate({_id: id }, { name, username, email, password, avatar, background })
 
-    module.exports = {
+    export default {
         createService,
         findAllService,
         findByIdService,

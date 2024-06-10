@@ -1,4 +1,4 @@
-const mongoose  = require('mongoose');
+import mongoose from 'mongoose';// Importação do mongoose para uso do MongoDB
 
 const UserSchema = new mongoose.Schema({
     name : {
@@ -30,4 +30,4 @@ const UserSchema = new mongoose.Schema({
 
 const User = mongoose.model('User', UserSchema);
 
-module.exports = User; // Esquema  (schema) do usuário (UserSchema) e modelo (model) do usuário (User) exportados para uso em outros arquivos
+export default User;// Esquema  (schema) do usuário (UserSchema) e modelo (model) do usuário (User) exportados para uso em outros arquivos
