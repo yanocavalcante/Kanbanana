@@ -1,6 +1,13 @@
 const express = require('express')
 const app = express()
+const connectDataBase = require("./src/database/db")
+
 const userRoute = require('./src/routes/user.route')
+const port = 3000
+
+connectDataBase();
+app.use(express.json()); // mandar dados json para nossa api
+app.use("/user", userRoute);
 
 // ROTA
     // Method HTTP - CRUD (Create, Read, Update, Delete)
@@ -18,3 +25,4 @@ const userRoute = require('./src/routes/user.route')
 //     const soma = 2 +2 ;
 //     res.send({result : result})
 // });
+app.listen(port, () => console.log(`Servidor Rodando na porta ${port}`))
