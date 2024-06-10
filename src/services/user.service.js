@@ -6,8 +6,19 @@
 
     const findByIdService = (id) => User.findById(id) // o findById é um método do mongoose que retorna um documento de uma coleção no banco de dados com base no id
 
+    const updateService = (
+        id,
+        name,
+        username,
+        email,
+        password,
+        avatar,
+        background
+        ) => User.findOneAndUpdate({_id: id }, { name, username, email, password, avatar, background })
+
     module.exports = {
         createService,
         findAllService,
-        findByIdService
+        findByIdService,
+        updateService
     }
