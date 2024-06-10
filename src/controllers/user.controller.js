@@ -53,8 +53,42 @@ const findById = async (req, res) => {
     res.status(200).json(user)
 }
 
+const update = async (req, res) => {
+    const {name, username, email, password, avatar, background} = req.body;
+
+    if (!name && !username && !email && !password && !avatar && !background) {
+        res.status(400).json({"message": "Submit at least one fields for update"})
+    }
+
+    const id = req.params.id;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(400).json({"message": "Invalid ID"})
+    }
+
+    const user = await userService.findByIdService(id);
+
+    if (!user) {
+        return res.status(404).json({"message": "User not found"})
+    }
+
+    // Atualizando o usuário nessas linhas. Se o campo não for enviado, ele não será atualizado.
+    await userService.updateService(
+        id,
+        name,
+        username,
+        email,
+        password,
+        avatar,
+        background
+    );  
+
+    res.status(200).json({"message": "User updated successfully!"})
+}
+
 module.exports = {
     create,
     findAll,
-    findById
+    findById,
+    update
 }

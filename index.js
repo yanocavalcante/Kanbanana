@@ -8,7 +8,7 @@ const port = 3000
 connectDataBase();
 app.use(express.json()); // mandar dados json para nossa api
 app.use("/user", userRoute);
-
+    
 // ROTA
     // Method HTTP - CRUD (Create, Read, Update, Delete)
         //  GET - pegar informações
