@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "description": "Desenvolvimento de uma plataforma web cujo objetivo é a organização de tarefas e atividades dentro de um time, baseando-se no sistema visual de administração chamado \"Kanban\" que propõe o acompanhamento constante dos estágios em que cada atividade se encontra. Muito utilizado em empresas de tecnologia por fornecer uma visão geral simples e controlada dos processos em execução dentro de um time.",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "start": "node index",
-    "dev": "nodemon index"  
+    "start": "node src/index",
+    "dev": "nodemon src/index"
   },
   "repository": {
     "type": "git",
@@ -19,7 +20,11 @@
   },
   "homepage": "https://github.com/yanocavalcante/kanban_web#readme",
   "dependencies": {
+    "bcrypt": "^5.1.1",
+    "dotenv": "^16.4.5",
     "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.4.1",
     "nodemon": "^3.1.3"
   }
 }

@@ -1,21 +1,20 @@
-const express = require('express')
+import express from 'express';
+import connectDataBase from './src/database/db.js';
+import dotenv from 'dotenv';
+
+import userRoute from './src/routes/user.route.js';
+import authRoute from './src/routes/auth.route.js';
+
+
+dotenv.config();
+
 const app = express()
+const port = process.env.PORT || 3000 //Porta que o servidor disponibiliza OU a porta 3000
 
-// ROTA
-    // Method HTTP - CRUD (Create, Read, Update, Delete)
-        //  GET - pegar informações
-        //  POST - criar informações
-        //  PUT - alterar todas as informações
-        // PATCH - alterar algumas informações
-        // DELETE - deletar informações
+connectDataBase();
+app.use(express.json()); // mandar dados json para nossa api
+app.use("/user", userRoute);
+app.use("/auth", authRoute);
 
-    // Name - Um indentificador da Rota
 
-    // Function (Callback) - Responsavel por executar um comando
-app.get('/soma', (req, res) => {
-    const result = 100 + 1;
-    const soma = 2 +2 ;
-    res.send({result : result})
-});
-
-app.listen(3000);
+app.listen(port, () => console.log(`Servidor Rodando na porta ${port}`))
