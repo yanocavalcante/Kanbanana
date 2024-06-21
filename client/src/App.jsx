@@ -1,16 +1,13 @@
 import { useState } from 'react'
-import Register from "./components/Register"
-import Login from "./components/Login"
-import Navbar from './components/Navbar/Navbar'
 import { GlobalStyled } from "./GlobalStyled"
+import WorkArea from './pages/WorkArea/WorkArea'
 
 function App() {
 
   return (
     <>
       <GlobalStyled />
-      <Navbar />
-      <Login />
+      <WorkArea />
     </>
   )
 }
