@@ -1,5 +1,6 @@
 import logo from "../../images/banana.png"
 import { Nav, Logo } from "./NavbarStyled"
+import { Outlet } from "react-router-dom"
 
 export default function Navbar() {
     return (
@@ -10,6 +11,7 @@ export default function Navbar() {
                 </div>
                 <i className="bi bi-person"></i>
             </Nav>
+            <Outlet />
         </>
     )
 }
