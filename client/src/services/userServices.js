@@ -9,7 +9,12 @@ export function signup(data) {
          avatar:"https://upload.wikimedia.org/wikipedia/pt/8/86/Avatar_Aang.png",
         background:"https://images.opencollective.com/react-app/b38ebe2/background.jpg"
     }
-    const response = axios.post(`${baseURL}/`, body)
+    const response = axios.post(`${baseURL}/auth/`, body)
+    return response
+}
+
+export function signin(data) {
+    const response = axios.post(`${baseURL}/user/`, data)
     return response
 }
 
