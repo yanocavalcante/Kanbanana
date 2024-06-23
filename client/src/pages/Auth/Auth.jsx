@@ -7,6 +7,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { signinSchema } from '../../schemas/signinSchema';
 import { signupSchema } from '../../schemas/signupSchema';
 import { ErrorSpan } from './ErrorSpanStyled';
+import { signup } from '../../services/userServices'
 
 const Auth = () => {
   const {
@@ -28,8 +29,13 @@ const Auth = () => {
     console.log(data)
   }
 
-  function signupHandleSubmit(data){
-    console.log(data)
+  async function signupHandleSubmit(data){
+    try {
+      const response = await signup(data)
+      console.log(response)
+    } catch (error){
+      console.log(error)
+    }
   }
 
   const [isRegistro, setIsRegistro] = useState(true);
