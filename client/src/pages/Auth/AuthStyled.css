@@ -12,7 +12,7 @@
     border: 6px solid #4C2509;
     border-radius: 32px;
     width: 582px;
-    height: 455px;
+    min-height: 455px;
     padding: 20px;
     box-sizing: border-box;
     position: relative;
