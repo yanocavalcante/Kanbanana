@@ -2,8 +2,6 @@ import styled from "styled-components"
 
 export const Nav = styled.nav`
     display: flex;
-    justify-content: space-between;
-    align-items: center;
     max-width: 100%;
     padding: 1rem 0;
     margin: 0;
@@ -17,6 +15,8 @@ export const Nav = styled.nav`
     i {
         position: absolute;
         right: 2em;
+        font-size: 1.75rem;
+        padding-top: 0.5rem;
     }
 `
 
