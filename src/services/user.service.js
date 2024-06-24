@@ -17,7 +17,7 @@ const updateService = (
         { name, username, email, password, avatar, background }
     );
 
-export default {
+export {
     createService,
     findAllService,
     findByIdService,

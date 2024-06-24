@@ -1,18 +1,18 @@
-import mongoose from 'mongoose';
-import userService from '../services/user.service.js'
+import mongoose from "mongoose";
+import { findByIdService } from "../services/user.service.js";
 
 export const validId = (req, res, next) => {
     try {
         const id = req.params.id;
 
         if (!mongoose.Types.ObjectId.isValid(id)) {
-            return res.status(400).json({ "message": "Invalid ID" })
+            return res.status(400).json({ message: "Invalid ID" });
         }
         req.id = id;
 
         next();
     } catch (err) {
-        res.status(500).send({ message: err.message })
+        res.status(500).send({ message: err.message });
     }
 };
 
@@ -20,10 +20,10 @@ export const validUser = async (req, res, next) => {
     try {
         const id = req.id;
 
-        const user = await userService.findByIdService(id);
+        const user = await findByIdService(id);
 
         if (!user) {
-            return res.status(404).json({ "message": "User not found" })
+            return res.status(404).json({ message: "User not found" });
         }
 
         req.id = id;
@@ -31,6 +31,6 @@ export const validUser = async (req, res, next) => {
 
         next();
     } catch (err) {
-        res.status(500).send({ message: err.message })
+        res.status(500).send({ message: err.message });
     }
 };

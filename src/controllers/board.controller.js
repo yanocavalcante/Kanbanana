@@ -11,14 +11,25 @@ const create = async (req, res) => {
         await createService({
             name,
         });
+
+        res.status(201).send({ message: "Board created" });
     } catch (err) {
         res.status(500).send({ message: err.message });
     }
 };
 
-const findAll = (req, res) => {
-    const board = [];
-    res.status(200).send(board);
+const findAll = async (req, res) => {
+    try {
+        const boards = await findAllService();
+
+        if (!boards) {
+            return res.status(404).json({ message: "Boards not found" });
+        }
+
+        res.status(200).json(boards);
+    } catch (err) {
+        res.status(500).send({ message: err.message });
+    }
 };
 
-export default { create, findAll };
+export { create, findAll };
