@@ -1,18 +1,7 @@
-import { useState } from 'react'
-import Register from "./components/Register"
-import Login from "./components/Login"
-import Navbar from './components/Navbar/Navbar'
-import { GlobalStyled } from "./GlobalStyled"
+import { Outlet } from 'react-router-dom'
 
 function App() {
-
-  return (
-    <>
-      <GlobalStyled />
-      <Navbar />
-      <Login />
-    </>
-  )
+  return <Outlet />
 }
 
 export default App

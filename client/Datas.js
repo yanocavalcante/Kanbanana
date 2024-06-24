@@ -24,3 +24,16 @@ export const users = [
         background: "https://pbs.twimg.com/profile_banners/819660012205305856/1693349786/1500x500"
     },
 ]
+
+export const cards = [
+    {
+        todo: ["Estrutura de Dados"],
+        doing: ["Projeto Web", "Trabalho estatística"],
+        done: ["Financeiro"]
+    },
+    {
+        todo: ["Trabalho estatística"],
+        doing: ["Projeto Web", "Geração"],
+        done: ["Financeiro"]
+    }
+]
