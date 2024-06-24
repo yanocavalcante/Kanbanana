@@ -4,7 +4,7 @@ const create = async (req, res) => {
     try {
         const { name } = req.body;
         if (!name) {
-            res.status(400).send({
+            return res.status(400).send({
                 message: "Submit all fields for registration",
             });
         }
