@@ -2,19 +2,6 @@ import { createService, findAllService } from "../services/board.service.js";
 
 const create = async (req, res) => {
     try {
-        const { authorization } = req.headers;
-
-        if (!authorization) {
-            return res.status(401).send({ message: "Unauthorized!" });
-        }
-
-        const parts = authorization.split(" ");
-        const [schema, token] = parts;
-
-        if (parts.length !== 2) {
-            return res.status(401).send({ message: "Unauthorized!" });
-        }
-
         const { name } = req.body;
         if (!name) {
             return res.status(400).send({
