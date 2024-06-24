@@ -1,5 +1,5 @@
-import mongoose from 'mongoose';// Importação do mongoose para uso do MongoDB
-import bcrypt from 'bcrypt';// Importação do bcrypt para criptografia de senha do usuário
+import mongoose from 'mongoose';
+import bcrypt from 'bcrypt';
 
 const UserSchema = new mongoose.Schema({
     name : {
@@ -18,7 +18,7 @@ const UserSchema = new mongoose.Schema({
     password : {
         type : String,
         required : true,
-        select: false // quando o usuário for buscado, o campo password não será retornado no DB
+        select: false
     },
     avatar : {
         type : String,
@@ -30,8 +30,8 @@ const UserSchema = new mongoose.Schema({
     }
 });
 
-UserSchema.pre("save", async function (next) { //Antes de salavar o schema, fazer algo
-    this.password = await bcrypt.hash(this.password, 10); // Faz 10 saltos (rodadas) de criptografia na senha utilizadno hash
+UserSchema.pre("save", async function (next) {
+    this.password = await bcrypt.hash(this.password, 10);
     next();
 })
 
