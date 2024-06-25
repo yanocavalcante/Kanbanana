@@ -31,7 +31,7 @@ const Auth = () => {
   async function signinHandleSubmit(data){
     try {
       const response = await signin(data)
-      Cookies.set("token", response.data, { expires: 1 })
+      Cookies.set("token", response.data.token, { expires: 1 })
       navigate('/home')
     } catch (error){
       console.log(error)
@@ -41,7 +41,7 @@ const Auth = () => {
   async function signupHandleSubmit(data){
     try {
       const response = await signup(data)
-      Cookies.set("token", response.data.token, { expires: 1 })
+      Cookies.set("token", response.data.token, { expires: 1 }) // Token não definido 
       navigate('/home')
     } catch (error){
       console.log(error)
