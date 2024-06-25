@@ -37,8 +37,9 @@ export default function Navbar() {
                 <Link to="/home">
                     <Logo src={logo} alt="Logo Kanbanana" />
                 </Link>
+                <h2>Olá, {user.name}!</h2>
                 <section>
-                    <Link to="/home/profile">
+                    <Link to="/home/profile" style={{textDecoration: 'none'}}>
                         <ProfileIcon className="bi bi-person"></ProfileIcon>
                     </Link>
                     <SignoutIcon className="bi bi-box-arrow-right" onClick={signout}></SignoutIcon>
