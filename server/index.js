@@ -21,4 +21,4 @@ app.use("/auth", authRoute);
 app.use("/board", boardRoute);
 
 
-app.listen(port, () => console.log(`Servidor Rodando na porta ${port}`));
+app.listen(port, () => console.log(`Server running on port ${port}`));

@@ -7,7 +7,9 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { signinSchema } from '../../schemas/signinSchema';
 import { signupSchema } from '../../schemas/signupSchema';
 import { ErrorSpan } from './ErrorSpanStyled';
-import { signup } from '../../services/userServices'
+import { signup } from '../../services/userServices';
+import { signin } from '../../services/userServices';
+import Cookies from "js-cookie";
 
 const Auth = () => {
   const {
