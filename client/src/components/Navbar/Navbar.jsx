@@ -2,12 +2,13 @@ import logo from "../../images/banana.png"
 import { Nav, Logo, ProfileIcon, SignoutIcon } from "./NavbarStyled"
 import { Outlet, Link, useNavigate} from "react-router-dom"
 import { userLogged } from '../../services/userServices'
-import { useEffect, useState } from "react"
+import { useContext, useEffect } from "react"
 import Cookies from 'js-cookie'
+import { UserContext } from "../../Context/UserContext"
 
 export default function Navbar() {
 
-    const [user, setUser] = useState({})
+    const {user, setUser} = useContext(UserContext)
     
     async function findUserLogged() {
         try {
@@ -26,7 +27,7 @@ export default function Navbar() {
 
     function signout() {
         Cookies.remove('token')
-        setUser(undefined)
+        setUser({})
         navigate("/")
     }
 
