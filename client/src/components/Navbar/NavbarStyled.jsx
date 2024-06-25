@@ -11,6 +11,11 @@ export const Nav = styled.nav`
     z-index: 1;
     border-radius: 0 0 0.75rem 0.75rem;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    align-items: center;
+
+    h2 {
+        padding-left: 0.5rem;
+    }
 
 `
 
@@ -18,14 +23,14 @@ export const ProfileIcon = styled.i`
     position: absolute;
     right: 4rem;
     font-size: 1.75rem;
-    padding-top: 0.5rem;
+    margin-top: -15px;
 `
 export const SignoutIcon = styled.i`
     position: absolute;
     right: 1rem;
     font-size: 1.75rem;
-    padding-top: 0.5rem;
     cursor: pointer;
+    margin-top: -14.1px;
 `
 
 export const Logo = styled.img`
@@ -44,7 +49,8 @@ export const UserSpace = styled.section`
     gap: 1rem;
 
     h2 {
-        font-size: 1.1rem;
+        right: 2rem;
+        font-size: 0.7rem;
         transition: all 0.3s;
     }
 
