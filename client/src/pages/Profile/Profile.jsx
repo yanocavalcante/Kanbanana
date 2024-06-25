@@ -1,6 +1,6 @@
 import { useContext } from "react"
 import { UserContext } from "../../Context/UserContext"
-import { ProfileContainer } from './ProfileStyled'
+import { ProfilePage, ProfileContainer, Button } from './ProfileStyled'
 
 export default function Profile() {
 
@@ -15,10 +15,13 @@ export default function Profile() {
     }
 
     return (
-        <ProfileContainer>
-            <img src={user.avatar} alt="Foto do usuário" />
-            <h1> {user.name} </h1>
-            <h2> @{user.username}</h2>
-        </ProfileContainer>
+        <ProfilePage>
+            <ProfileContainer>
+                <img src={user.avatar} alt="Foto do usuário" />
+                <h1> {user.name} </h1>
+                <h2> @{user.username}</h2>
+            </ProfileContainer>
+            <Button> Editar Perfil </Button>
+        </ProfilePage>
     )
 }
