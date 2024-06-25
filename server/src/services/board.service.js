@@ -1,8 +1,10 @@
 import Board from "../models/Board.js";
 
-
 const createService = (body) => Board.create(body);
 
-const findAllService = () => Board.find();
+const findAllService = (offset, limit) =>
+    Board.find().sort({ _id: -1 }).skip(offset).limit(limit);
 
-export { createService, findAllService }
+const countBoards = () => Board.countDocuments();
+
+export { createService, findAllService, countBoards};
