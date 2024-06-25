@@ -9,7 +9,15 @@ const BoardSchema = new mongoose.Schema({
         type: Date,
         default: Date.now(),
     },
-    lists: {
+    columnToDo: {
+        type: Array,
+        required: true,
+    },
+    columnDoing: {
+        type: Array,
+        required: true,
+    },
+    columnDone: {
         type: Array,
         required: true,
     },

@@ -7,25 +7,24 @@ import {
 
 const create = async (req, res) => {
     try {
-        const { name, username, email, password, avatar, background } =
+        const { name, username, email, password, avatar } =
             req.body;
         if (
             !name ||
             !username ||
             !email ||
             !password ||
-            !avatar ||
-            !background
+            !avatar
         ) {
             res.status(400).json({
-                message: "Submit all fields for resgistration",
+                message: "Submit all fields for registration",
             });
         }
 
         const user = await createService(req.body);
 
         if (!user) {
-            return res.status(400).json({ message: "Error to create user" });
+            return res.status(400).json({ message: "Error while creating user" });
         }
 
         res.status(201).json({
@@ -36,7 +35,6 @@ const create = async (req, res) => {
                 username,
                 email,
                 avatar,
-                background,
             },
         });
     } catch (err) {
@@ -49,7 +47,7 @@ const findAll = async (req, res) => {
         const users = await findAllService();
 
         if (!users) {
-            return res.status(404).json({ message: "Users not found" });
+            return res.status(404).json({ message: "No users registered" });
         }
 
         res.status(200).json(users);
@@ -70,7 +68,7 @@ const findById = async (req, res) => {
 
 const update = async (req, res) => {
     try {
-        const { name, username, email, password, avatar, background } =
+        const { name, username, email, password, avatar } =
             req.body;
 
         if (
@@ -78,17 +76,15 @@ const update = async (req, res) => {
             !username &&
             !email &&
             !password &&
-            !avatar &&
-            !background
+            !avatar
         ) {
             res.status(400).json({
-                message: "Submit at least one fields for update",
+                message: "Submit at least one field for update",
             });
         }
 
         const { id, user } = req;
 
-        // Atualizando o usuário nessas linhas. Se o campo não for enviado, ele não será atualizado.
         await updateService(
             id,
             name,
@@ -96,7 +92,6 @@ const update = async (req, res) => {
             email,
             password,
             avatar,
-            background
         );
 
         res.status(200).json({ message: "User updated successfully!" });
