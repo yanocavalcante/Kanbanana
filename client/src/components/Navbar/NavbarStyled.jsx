@@ -48,7 +48,7 @@ export const UserSpace = styled.section`
         transition: all 0.3s;
     }
 
-    h2: hover{
+    h2:hover{
         color: #363636;
     }
 `
