@@ -28,8 +28,18 @@ export function userLogged() {
     return response
 }
 
+export function editUser(body, id) {
+    const response = axios.patch(`${baseURL}/users/update/${id}`, body, {
+        headers: {
+            Authorization: `Bearer ${Cookies.get("token")}`,
+        }
+    })
+    return response
+}
+
 function generateUsername(name) {
     const nameFormatado = name.replace(/\s/g, "").toLowerCase();
     const randomNumber = Math.floor(Math.random() * 1000);
     return `${nameFormatado}-${randomNumber}`;
 }
+
