@@ -7,4 +7,9 @@ const findAllService = (offset, limit) =>
 
 const countBoards = () => Board.countDocuments();
 
-export { createService, findAllService, countBoards};
+const findByIdService = (id) => Board.findById(id);
+
+const updateService = (id, body) => Board.findByIdAndUpdate(id, body, { new: true });
+
+export { createService, findAllService, countBoards, findByIdService, updateService};
+

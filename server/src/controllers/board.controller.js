@@ -2,6 +2,8 @@ import {
     createService,
     findAllService,
     countBoards,
+    findByIdService,
+    updateService,
 } from "../services/board.service.js";
 
 const create = async (req, res) => {
@@ -73,4 +75,28 @@ const findAll = async (req, res) => {
     }
 };
 
-export { create, findAll };
+const findById = async (req, res) => {
+    try {
+        const board = await findByIdService(req.params.id);
+        if (!board) {
+            return res.status(404).send({ message: 'Board not found' });
+        }
+        res.send(board);
+    } catch (error) {
+        res.status(500).send({ message: error.message });
+    }
+};
+
+const update = async (req, res) => {
+    try {
+        const board = await updateService(req.params.id, req.body);
+        if (!board) {
+            return res.status(404).send({ message: 'Board not found' });
+        }
+        res.send(board);
+    } catch (error) {
+        res.status(500).send({ message: error.message });
+    }
+};
+
+export { create, findAll, findById, update};
