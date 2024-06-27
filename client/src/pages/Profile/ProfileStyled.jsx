@@ -5,7 +5,7 @@ export const ProfilePage = styled.div`
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    width: 80%;
+    width: 100%;
     margin: 0 auto;
     padding-top: 4rem;
     gap: 10rem;
@@ -33,15 +33,6 @@ export const ProfileContainer = styled.div`
     }
 `
 
-export const Button = styled.button`
-    display: flex;
-    width: 10rem;
-    height: 3rem;
-    justify-content: center;
-    align-items: center;
-    font-size: 1.2rem;
-`
-
 export const EditContainer = styled.div`
     display: flex;
     flex-direction: column;
@@ -51,4 +42,15 @@ export const EditContainer = styled.div`
         align-items: flex-start;
         padding-top: 1rem;
     }
+`
+
+export const Button = styled.button`
+    padding: 10px;
+    background-color: #FFFBAF;
+    color: #231204;
+    border: 3px solid #4C2509;
+    border-radius: 8px;
+    margin-top: 15px;
+    width: 50%;
+    justify-content: center;
 `

@@ -1,5 +1,6 @@
 import axios from "axios";
 import Cookies from 'js-cookie'
+import { useUser } from "../Context/UserContext";
 
 const baseURL = "http://localhost:3000";
 
@@ -29,7 +30,7 @@ export function userLogged() {
 }
 
 export function editUser(data) {
-    const {user} = useContext(UserContext)
+    const {user} = useUser()
     const body = {
         ...data,
         avatar: user.avatar,

@@ -1,4 +1,4 @@
-import { ProfilePage, ProfileContainer, EditContainer } from './ProfileStyled'
+import { ProfilePage, ProfileContainer, EditContainer, Button } from './ProfileStyled'
 import { EditInput } from '../../components/EditInput/EditInput'
 import { useForm } from 'react-hook-form';
 import { useUser } from "../../Context/UserContext"
@@ -53,6 +53,7 @@ export default function Profile() {
                     <EditInput type="password" name="password" value={user.password} register={register}/>
                     <label>Confirme sua nova senha</label>
                     <EditInput type="password" name="confirmPassword" value={user.password} register={register}/>
+                    <Button type="submit">Editar</Button>
                 </form>
             </EditContainer>
         </ProfilePage>
