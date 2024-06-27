@@ -15,6 +15,8 @@ import { useAuth } from '../../Context/AuthContext';
 const Auth = () => {
   const { login } = useAuth()
 
+  const [visible, setVisible] = useState(false)
+
   const {
     register: registerSignup, 
     handleSubmit: handleSubmitSignup,
@@ -38,7 +40,7 @@ const Auth = () => {
       login()
       navigate('/home')
     } catch (error){
-      console.log(error)
+      setVisible(true)
     }
   }
 
@@ -49,7 +51,7 @@ const Auth = () => {
       login()
       navigate('/home')
     } catch (error){
-      console.log(error)
+      setVisible(true)
     }
   }
 
@@ -57,11 +59,13 @@ const Auth = () => {
 
   const handleRegistroClick = () => {
     setIsRegistro(true);
+    setVisible(false)
     resetSignup()
   };
 
   const handleLoginClick = () => {
     setIsRegistro(false);
+    setVisible(false)
     resetSignin()
   };
 
@@ -95,6 +99,7 @@ const Auth = () => {
               {errorsSignup.password && <ErrorSpan> {errorsSignup.password.message} </ ErrorSpan>}
               <Input type="password" name="confirmPassword" placeholder="Confirmação de senha" register={registerSignup}/>
               {errorsSignup.confirmPassword && <ErrorSpan> {errorsSignup.confirmPassword.message} </ ErrorSpan>}
+              {visible && <ErrorSpan> Email já cadastrado </ ErrorSpan>}
             </>
           ) : (
             <>
@@ -102,6 +107,7 @@ const Auth = () => {
               {errorsSignin.email && (<ErrorSpan> {errorsSignin.email.message} </ ErrorSpan>)}
               <Input type="password" name="password" placeholder="Senha" register={registerSignin}/>
               {errorsSignin.password && <ErrorSpan> {errorsSignin.password.message} </ ErrorSpan>}
+              {visible && <ErrorSpan> Email ou senha incorretos </ ErrorSpan>}
             </>
           )}
           <div className="entrar-checkbox-container">
