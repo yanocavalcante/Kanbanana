@@ -4,7 +4,7 @@ import Cookies from 'js-cookie'
 const baseURL = "http://localhost:3000";
 
 export function signup(data) {
-    delete data.confirmPassword;
+    delete data.confirmPassword
     const body = {
         ...data,
         username: generateUsername(data.name),
@@ -28,8 +28,15 @@ export function userLogged() {
     return response
 }
 
-export function editUser(body, id) {
-    const response = axios.patch(`${baseURL}/users/update/${id}`, body, {
+export function editUser(data) {
+    const {user} = useContext(UserContext)
+    const body = {
+        ...data,
+        avatar: user.avatar,
+    };
+
+    delete data.confirmPassword
+    const response = axios.patch(`${baseURL}/user/${user.id}`, body, {
         headers: {
             Authorization: `Bearer ${Cookies.get("token")}`,
         }
