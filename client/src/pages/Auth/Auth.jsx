@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './AuthStyled.css';
 import { Input } from '../../components/Input/Input'
 import { useForm } from 'react-hook-form';
@@ -10,8 +10,11 @@ import { ErrorSpan } from './ErrorSpanStyled';
 import { signup } from '../../services/userServices';
 import { signin } from '../../services/userServices';
 import Cookies from "js-cookie";
+import { useAuth } from '../../Context/AuthContext';
 
 const Auth = () => {
+  const { login } = useAuth()
+
   const {
     register: registerSignup, 
     handleSubmit: handleSubmitSignup,
@@ -32,6 +35,7 @@ const Auth = () => {
     try {
       const response = await signin(data)
       Cookies.set("token", response.data.token, { expires: 1 })
+      login()
       navigate('/home')
     } catch (error){
       console.log(error)
@@ -41,7 +45,8 @@ const Auth = () => {
   async function signupHandleSubmit(data){
     try {
       const response = await signup(data)
-      Cookies.set("token", response.data.token, { expires: 1 }) // Token não definido 
+      Cookies.set("token", response.data.token, { expires: 1 })
+      login()
       navigate('/home')
     } catch (error){
       console.log(error)

@@ -1,15 +1,14 @@
-import { useContext } from "react"
-import { UserContext } from "../../Context/UserContext"
-import { ProfilePage, ProfileContainer, Button, EditContainer } from './ProfileStyled'
+import { ProfilePage, ProfileContainer, EditContainer } from './ProfileStyled'
 import { EditInput } from '../../components/EditInput/EditInput'
 import { useForm } from 'react-hook-form';
+import { useUser } from "../../Context/UserContext"
 import { zodResolver } from '@hookform/resolvers/zod'
 import { editSchema } from '../../schemas/editSchema';
 import { editUser } from '../../services/userServices';
 
 export default function Profile() {
 
-    //const {user} = useContext(UserContext)
+    //const {user} = useUser()
 
     const user = {
         _id: "667a0691ce5f2ba2754e215f",
