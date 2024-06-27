@@ -5,7 +5,7 @@ import { EditInput } from '../../components/EditInput/EditInput'
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod'
 import { editSchema } from '../../schemas/editSchema';
-//import { editUser } from '../../services/userServices';
+import { editUser } from '../../services/userServices';
 
 export default function Profile() {
 
@@ -23,20 +23,17 @@ export default function Profile() {
     const {
         register, 
         handleSubmit,
-        reset,
         formState: {errors}
       } = useForm({resolver: zodResolver(editSchema)})
 
-/*      async function editHandleSubmit(data){
+      async function editHandleSubmit(data){
         try {
-          const response = await editUser(data, id)
-          Cookies.set("token", response.data.token, { expires: 1 }) // Token não definido 
-          navigate('/home')
+          const response = await editUser(data)
         } catch (error){
           console.log(error)
         }
       }
-*/
+
     return (
         <ProfilePage>
             <ProfileContainer>
@@ -46,7 +43,7 @@ export default function Profile() {
             </ProfileContainer>
             <EditContainer>
                 <h1> Editar Perfil </h1>
-                <form /*onSubmit={handleSubmit(editHandleSubmit)}*/>
+                <form onSubmit={handleSubmit(editHandleSubmit)}>
                     <label>Nome</label>
                     <EditInput type="text" name="name" value={user.name} register={register}/>
                     <label>Usuário</label>
