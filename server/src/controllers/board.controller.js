@@ -105,7 +105,7 @@ const update = async (req, res) => {
 const deleteBoard = async (req, res) => {
     try {
         const { id } = req.params;
-        await deleteService(id); // Chamar o serviço de delete
+        await deleteBoardService(id); // Chamar o serviço de delete
         res.status(200).send({ message: "Board deleted successfully" });
     } catch (error) {
         res.status(500).send({ message: error.message });
