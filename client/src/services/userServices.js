@@ -29,14 +29,10 @@ export function userLogged() {
     return response
 }
 
-export function editUser(data) {
+export function editUser(body) {
     const {user} = useUser()
-    const body = {
-        ...data,
-        avatar: user.avatar,
-    };
 
-    delete data.confirmPassword
+    delete body.confirmPassword
     const response = axios.patch(`${baseURL}/user/${user.id}`, body, {
         headers: {
             Authorization: `Bearer ${Cookies.get("token")}`,
