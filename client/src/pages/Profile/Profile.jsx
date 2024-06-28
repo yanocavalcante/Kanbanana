@@ -53,7 +53,7 @@ export default function Profile() {
                     <EditInput type="password" name="password" value={user.password} register={register}/>
                     <label>Confirme sua nova senha</label>
                     <EditInput type="password" name="confirmPassword" value={user.password} register={register}/>
-                    <Button type="submit">Editar</Button>
+                    <Button type="submit">Confirmar Edição</Button>
                 </form>
             </EditContainer>
         </ProfilePage>
