@@ -11,5 +11,11 @@ const findByIdService = (id) => Board.findById(id);
 
 const updateService = (id, body) => Board.findByIdAndUpdate(id, body, { new: true });
 
-export { createService, findAllService, countBoards, findByIdService, updateService};
+const deleteBoardService = async (boardId) => {
+    const board = await Board.findByIdAndDelete(boardId);
+    if (!board) throw new Error("Board not found");
+    return board;
+}
+
+export { createService, findAllService, countBoards, findByIdService, updateService, deleteBoardService};
 
