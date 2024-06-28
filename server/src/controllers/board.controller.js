@@ -4,6 +4,7 @@ import {
     countBoards,
     findByIdService,
     updateService,
+    deleteBoardService
 } from "../services/board.service.js";
 
 const create = async (req, res) => {
@@ -101,5 +102,15 @@ const update = async (req, res) => {
         res.status(500).send({ message: error.message });
     }
 };
+const deleteBoard = async (req, res) => {
+    try {
+        const { id } = req.params;
+        await deleteService(id); // Chamar o serviço de delete
+        res.status(200).send({ message: "Board deleted successfully" });
+    } catch (error) {
+        res.status(500).send({ message: error.message });
+    }
+};
 
-export { create, findAll, findById, update};
+
+export { create, findAll, findById, update, deleteBoard};
