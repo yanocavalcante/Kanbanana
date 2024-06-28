@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './AuthStyled.css';
 import { Input } from '../../components/Input/Input'
 import { useForm } from 'react-hook-form';
@@ -10,8 +10,13 @@ import { ErrorSpan } from './ErrorSpanStyled';
 import { signup } from '../../services/userServices';
 import { signin } from '../../services/userServices';
 import Cookies from "js-cookie";
+import { useAuth } from '../../Context/AuthContext';
 
 const Auth = () => {
+  const { login } = useAuth()
+
+  const [visible, setVisible] = useState(false)
+
   const {
     register: registerSignup, 
     handleSubmit: handleSubmitSignup,
@@ -31,10 +36,11 @@ const Auth = () => {
   async function signinHandleSubmit(data){
     try {
       const response = await signin(data)
-      Cookies.set("token", response.data, { expires: 1 })
+      Cookies.set("token", response.data.token, { expires: 1 })
+      login()
       navigate('/home')
     } catch (error){
-      console.log(error)
+      setVisible(true)
     }
   }
 
@@ -42,9 +48,10 @@ const Auth = () => {
     try {
       const response = await signup(data)
       Cookies.set("token", response.data.token, { expires: 1 })
+      login()
       navigate('/home')
     } catch (error){
-      console.log(error)
+      setVisible(true)
     }
   }
 
@@ -52,11 +59,13 @@ const Auth = () => {
 
   const handleRegistroClick = () => {
     setIsRegistro(true);
+    setVisible(false)
     resetSignup()
   };
 
   const handleLoginClick = () => {
     setIsRegistro(false);
+    setVisible(false)
     resetSignin()
   };
 
@@ -90,6 +99,7 @@ const Auth = () => {
               {errorsSignup.password && <ErrorSpan> {errorsSignup.password.message} </ ErrorSpan>}
               <Input type="password" name="confirmPassword" placeholder="Confirmação de senha" register={registerSignup}/>
               {errorsSignup.confirmPassword && <ErrorSpan> {errorsSignup.confirmPassword.message} </ ErrorSpan>}
+              {visible && <ErrorSpan> Email já cadastrado </ ErrorSpan>}
             </>
           ) : (
             <>
@@ -97,6 +107,7 @@ const Auth = () => {
               {errorsSignin.email && (<ErrorSpan> {errorsSignin.email.message} </ ErrorSpan>)}
               <Input type="password" name="password" placeholder="Senha" register={registerSignin}/>
               {errorsSignin.password && <ErrorSpan> {errorsSignin.password.message} </ ErrorSpan>}
+              {visible && <ErrorSpan> Email ou senha incorretos </ ErrorSpan>}
             </>
           )}
           <div className="entrar-checkbox-container">

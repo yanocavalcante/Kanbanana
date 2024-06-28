@@ -1,9 +1,11 @@
 import axios from "axios";
+import Cookies from 'js-cookie'
+import { useUser } from "../Context/UserContext";
 
 const baseURL = "http://localhost:3000";
 
 export function signup(data) {
-    delete data.confirmPassword;
+    delete data.confirmPassword
     const body = {
         ...data,
         username: generateUsername(data.name),
@@ -18,8 +20,30 @@ export function signin(data) {
     return response;
 }
 
+export async function userLogged() {
+    const response = await axios.get(`${baseURL}/user/`, {
+        headers: {
+            Authorization: `Bearer ${Cookies.get("token")}`
+        }
+    })
+    return response.data[0]
+}
+
+export function editUser(body) {
+    const {user} = useUser()
+
+    delete body.confirmPassword
+    const response = axios.patch(`${baseURL}/user/${user.id}`, body, {
+        headers: {
+            Authorization: `Bearer ${Cookies.get("token")}`,
+        }
+    })
+    return response
+}
+
 function generateUsername(name) {
     const nameFormatado = name.replace(/\s/g, "").toLowerCase();
     const randomNumber = Math.floor(Math.random() * 1000);
     return `${nameFormatado}-${randomNumber}`;
 }
+
