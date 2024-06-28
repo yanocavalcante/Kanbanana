@@ -15,7 +15,7 @@ export default function Navbar() {
     async function findUserLogged() {
         try {
             const response = await userLogged()
-            setUser(response.data)
+            setUser(response)
         } catch (error) {
             console.log(error)
         }

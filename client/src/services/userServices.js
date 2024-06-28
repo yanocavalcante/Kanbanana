@@ -21,12 +21,12 @@ export function signin(data) {
 }
 
 export async function userLogged() {
-    const response = await axios.get(`${baseURL}/user/findById`, {
+    const response = await axios.get(`${baseURL}/user/`, {
         headers: {
             Authorization: `Bearer ${Cookies.get("token")}`
         }
     })
-    return response
+    return response.data[0]
 }
 
 export function editUser(body) {
