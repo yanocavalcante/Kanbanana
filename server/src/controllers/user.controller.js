@@ -2,6 +2,7 @@ import {
     createService,
     findAllService,
     findByIdService,
+    findUserByIdService,
     updateService,
 } from "../services/user.service.js";
 
@@ -66,6 +67,18 @@ const findById = async (req, res) => {
     }
 };
 
+const findUserByIdController = async (req, res) => {
+    try {
+        const user = await findUserByIdService(
+            req.params.id,
+            req.userId
+        );
+        return res.send(user);
+    } catch (err) {
+        return res.status(400).send(err.message)
+    }
+} 
+
 const update = async (req, res) => {
     try {
         const { name, username, email, password, avatar } =
@@ -100,4 +113,4 @@ const update = async (req, res) => {
     }
 };
 
-export default { create, findAll, findById, update };
+export default { create, findAll, findById, update, findUserByIdController};
