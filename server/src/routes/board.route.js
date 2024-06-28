@@ -10,6 +10,6 @@ router.post("/", authMiddleware, create);
 router.get("/", findAll);
 router.get("/:id", authMiddleware, findById);
 router.put("/:id", authMiddleware, update);
-router.delete('/board/:id', deleteBoard);
+router.delete('/:id', deleteBoard);
 
 export default router;
