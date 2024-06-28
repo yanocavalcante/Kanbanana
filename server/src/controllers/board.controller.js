@@ -9,13 +9,16 @@ import {
 const create = async (req, res) => {
     try {
         const { name } = req.body;
+        const userId = req.userId
+
         if (!name) {
             return res.status(400).send({
                 message: "Submit all fields for registration",
             });
         }
         await createService({
-            name,
+            name: name,
+            user: userId,
         });
 
         res.status(201).send({ message: "Board created" });
