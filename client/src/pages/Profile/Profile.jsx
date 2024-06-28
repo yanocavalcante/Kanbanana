@@ -8,16 +8,7 @@ import { editUser } from '../../services/userServices';
 
 export default function Profile() {
 
-    //const {user} = useUser()
-
-    const user = {
-        _id: "667a0691ce5f2ba2754e215f",
-        name: "Matheus Steinbach",
-        username: "theus",
-        email: 'matheus@gmail.com',
-        password: '123456',
-        avatar: 'https://pbs.twimg.com/media/GQe9lMYW8AAO-vL?format=jpg&name=900x900'
-    }
+    const {user} = useUser()
 
     const {
         register, 
