@@ -73,14 +73,23 @@ const updateService = async (id, name, userId) => {
     const board = await boardRepositories.findBoardByIdRepository(id);
     if (!board) throw new Error("Board not found");
 
-    if (board.user._id != userId) throw new Error("You didn't create this Board");
-    const my_board = await boardRepositories.updateBoardRepository(id, name);
-    console.log(my_board)
+    if (board.user._id != userId)
+        throw new Error("You didn't create this Board");
+    await boardRepositories.updateBoardRepository(id, name);
 };
 
+const deleteService = async (id, userId) => {
+    const board = await boardRepositories.findBoardByIdRepository(id);
+    if (!board) throw new Error("Board not found");
+
+    if (board.user._id != userId) throw new Error("You didn't create this Board");
+
+    await boardRepositories.deleteBoardRepository(id);
+};
 export default {
     createService,
     findAllService,
     findByIdService,
     updateService,
+    deleteService,
 };

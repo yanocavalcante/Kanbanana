@@ -8,10 +8,11 @@ const createBoardController = async (req, res) => {
                 message: "Submit all fields for registration",
             });
         }
-        const board = await boardService.createService({
-            name
+        const board = await boardService.createService(
+            {
+                name,
             },
-            userId,
+            userId
         );
         res.status(201).send(board);
     } catch (err) {
@@ -59,9 +60,22 @@ const updateBoardController = async (req, res) => {
     }
 };
 
+const deleteBoardController = async (req, res) => {
+    const { id } = req.params;
+    const userId = req.userId;
+
+    try {
+        await boardService.deleteService(id, userId);
+        return res.send({ message: "Board deleted successfully" });
+    } catch (e) {
+        return res.status(500).send(e.message);
+    }
+};
+
 export default {
     createBoardController,
     findAllBoardController,
     findBoardByIdBoardController,
     updateBoardController,
+    deleteBoardController,
 };

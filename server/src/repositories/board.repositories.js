@@ -28,6 +28,10 @@ function updateBoardRepository(id, name) {
     return Board.findOneAndUpdate({ _id: id }, { name }, { rawResult: true });
 }
 
+function deleteBoardRepository(id) {
+    return Board.findOneAndDelete({ _id: id });
+}
+
 export default {
     createBoardRepository,
     findAllBoardRepository,
@@ -35,4 +39,5 @@ export default {
     countBoardRepository,
     findBoardsByUserIdRepository,
     updateBoardRepository,
+    deleteBoardRepository,
 };
