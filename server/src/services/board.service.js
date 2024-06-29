@@ -67,17 +67,15 @@ const findByIdService = async (id) => {
     };
 };
 
-const updateService = async (id, name) => {
+const updateService = async (id, name, userId) => {
     if (!name) throw new Error("Submit at least one field to update the board");
 
     const board = await boardRepositories.findBoardByIdRepository(id);
-
     if (!board) throw new Error("Board not found");
 
-    if (board.user._id != userId)
-        throw new Error("You didn't create this Board");
-
-    await boardRepositories.updateBoardRepository(id, name);
+    if (board.user._id != userId) throw new Error("You didn't create this Board");
+    const my_board = await boardRepositories.updateBoardRepository(id, name);
+    console.log(my_board)
 };
 
 export default {

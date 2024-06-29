@@ -25,23 +25,14 @@ function findBoardsByUserIdRepository(id) {
 }
 
 function updateBoardRepository(id, name) {
-    return Board.findOneAndUpdate(
-        {
-            _id: id,
-        },
-        {
-            name,
-        },
-        {
-            rawResult: true,
-        }
-    );
+    return Board.findOneAndUpdate({ _id: id }, { name }, { rawResult: true });
 }
 
-export default {createBoardRepository,
-findAllBoardRepository,
-findBoardByIdRepository,
-countBoardRepository, 
-findBoardsByUserIdRepository,
-updateBoardRepository,
+export default {
+    createBoardRepository,
+    findAllBoardRepository,
+    findBoardByIdRepository,
+    countBoardRepository,
+    findBoardsByUserIdRepository,
+    updateBoardRepository,
 };
