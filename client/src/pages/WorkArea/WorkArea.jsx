@@ -2,7 +2,23 @@ import React, { useState } from 'react';
 import Navbar from '../../components/Navbar/Navbar';
 import Kanban from '../../components/Kanban/Kanban';
 import { cards } from '../../../Datas';
-import './WorkAreaStyled.css';
+import {
+  Container,
+  Header,
+  NavbarContainer,
+  NavbarBrand,
+  MenuToggle,
+  NavbarNav,
+  NavItem,
+  Main,
+  Quadro,
+  QuadroTitle,
+  Column,
+  ColumnTitle,
+  Task,
+  Popup,
+  PopupContent
+} from './WorkAreaStyled';
 
 export default function WorkArea() {
   const [showNewBoardPopup, setShowNewBoardPopup] = useState(false);
@@ -119,41 +135,41 @@ export default function WorkArea() {
   };
 
   return (
-    <div>
+    <Container>
       <Navbar />
-      <header>
-        <nav className="navbar">
-          <div className="navbar-brand">Kanbanana</div>
-          <div className="menu-toggle" id="mobile-menu">&#9776;</div>
-          <ul className="navbar-nav">
-            <li className="nav-item">
+      <Header>
+        <NavbarContainer className="navbar">
+          <NavbarBrand className="navbar-brand">Kanbanana</NavbarBrand>
+          <MenuToggle className="menu-toggle" id="mobile-menu">&#9776;</MenuToggle>
+          <NavbarNav className="navbar-nav">
+            <NavItem className="nav-item">
               <a href="#" onClick={() => setShowNewBoardPopup(true)}>
                 Criar Novo Quadro
               </a>
-            </li>
-            <li className="nav-item">
+            </NavItem>
+            <NavItem className="nav-item">
               <a href="#" onClick={() => alert('Botão "Perfil" clicado!')}>
                 Perfil
               </a>
-            </li>
-            <li className="nav-item">
+            </NavItem>
+            <NavItem className="nav-item">
               <a href="#">Retornar a Workspaces</a>
-            </li>
-          </ul>
-        </nav>
-      </header>
-      <main>
+            </NavItem>
+          </NavbarNav>
+        </NavbarContainer>
+      </Header>
+      <Main>
         {boards.map((board, boardIndex) => (
-          <div className="quadro" key={boardIndex}>
-            <div className="quadro-title">{board.name}</div>
+          <Quadro className="quadro" key={boardIndex}>
+            <QuadroTitle className="quadro-title">{board.name}</QuadroTitle>
             {Object.keys(board.columns).map((columnTitle, columnIndex) => (
-              <div
+              <Column
                 className="column"
                 key={columnIndex}
                 onDragOver={(e) => e.preventDefault()}
                 onDrop={() => handleDrop(columnTitle)}
               >
-                <div className="column-title">
+                <ColumnTitle className="column-title">
                   {columnTitle}
                   {columnTitle === 'To Do' && (
                     <button
@@ -166,9 +182,9 @@ export default function WorkArea() {
                       +
                     </button>
                   )}
-                </div>
+                </ColumnTitle>
                 {board.columns[columnTitle].map((task, taskIndex) => (
-                  <div
+                  <Task
                     className="task"
                     key={taskIndex}
                     draggable
@@ -180,16 +196,16 @@ export default function WorkArea() {
                     }}
                   >
                     {task.title}
-                  </div>
+                  </Task>
                 ))}
-              </div>
+              </Column>
             ))}
-          </div>
+          </Quadro>
         ))}
-      </main>
+      </Main>
       {showNewBoardPopup && (
-        <div id="new-board-popup" className="popup">
-          <div className="popup-content">
+        <Popup id="new-board-popup" className="popup">
+          <PopupContent className="popup-content">
             <span
               className="close"
               onClick={() => {
@@ -227,9 +243,9 @@ export default function WorkArea() {
             >
               Cancelar
             </button>
-          </div>
-        </div>
+          </PopupContent>
+        </Popup>
       )}
-    </div>
+    </Container>
   );
 }
