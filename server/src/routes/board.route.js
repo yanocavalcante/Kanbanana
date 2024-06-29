@@ -1,12 +1,17 @@
 import { Router } from "express";
-import { create, findAll, findById, update } from "../controllers/board.controller.js";
-import { authMiddleware } from "../middlewares/auth.middleware.js";
+import boardController from "../controllers/board.controller.js";
+import authMiddleware from "../middlewares/auth.middleware.js";
+import { validId } from "../middlewares/global.middlewares.js";
 
-const router = Router();
+const boardRouter = Router();
 
-router.post("/", authMiddleware, create);
-router.get("/", findAll);
-router.get("/:id", authMiddleware, findById);
-router.put("/:id", authMiddleware, update);
+boardRouter.get("/", boardController.findAllBoardController);
+boardRouter.get("/:id", boardController.findByIdBoardController);
 
-export default router;
+boardRouter.use(authMiddleware);
+boardRouter.post("/create", boardController.createBoardController);
+
+boardRouter.use(validId);
+boardRouter.patch("/update/:id", boardController.updateBoardController);
+
+export default boardRouter;
