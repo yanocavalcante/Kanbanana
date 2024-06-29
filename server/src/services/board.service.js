@@ -2,16 +2,14 @@ import boardRepositories from "../repositories/board.repositories.js";
 
 const createService = async ({ name }, userId) => {
     if (!name) throw new Error("Submit all fields for registration");
-
     const { id } = await boardRepositories.createBoardRepository(name, userId);
-
     return {
         message: "Board created successfully!",
         board: { id, name },
     };
 };
 
-const findAllService = async (offset, limit, currentUrl) => {
+const findAllService = async (limit, offset, currentUrl) => {
     limit = Number(limit);
     offset = Number(offset);
 
@@ -29,7 +27,6 @@ const findAllService = async (offset, limit, currentUrl) => {
     );
 
     const total = await boardRepositories.countBoardRepository();
-
     const next = offset + limit;
     const nextUrl =
         next < total ? `${currentUrl}?limit=${limit}&offset=${next}` : null;
@@ -40,8 +37,7 @@ const findAllService = async (offset, limit, currentUrl) => {
             ? `${currentUrl}?limit=${limit}&offset=${previous}`
             : null;
 
-    boards.shift();
-
+    // boards.shift();
     return {
         nextUrl,
         previousUrl,

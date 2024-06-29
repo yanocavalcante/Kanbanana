@@ -8,11 +8,11 @@ const userRouter = Router();
 
 userRouter.post("/create", userController.createUserController);
 
-userRouter.use(authMiddleware);
-userRouter.get("/", userController.findAllUserController);
+userRouter.get("/findById/:id?", authMiddleware, validId, userController.findUserByIdController);
+userRouter.patch("/update/:id", authMiddleware, validId, userController.updateUserController);
 
-userRouter.use(validId);
-userRouter.get("/findById/:id?", userController.findUserByIdController);
-userRouter.patch("/update/:id", userController.updateUserController);
+userRouter.get("/", authMiddleware, userController.findAllUserController);
+
+
 
 export default userRouter;

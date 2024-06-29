@@ -1,7 +1,7 @@
-import User from "..models/User.js";
+import User from "../models/User.js";
 
 const loginRepository = (email) => {
-    User.findOne({ email: email }).select("+password");
+    return User.findOne({ email: email }).select("+password");
 };
 
 export default { loginRepository }

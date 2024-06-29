@@ -8,9 +8,8 @@ async function createUserService({
   email,
   password,
   avatar,
-  background,
 }) {
-  if (!username || !name || !email || !password || !avatar || !background)
+  if (!username || !name || !email || !password || !avatar )
     throw new Error("Submit all fields for registration");
 
   const foundUser = await userRepositories.findByEmailUserRepository(email);
@@ -23,7 +22,6 @@ async function createUserService({
     email,
     password,
     avatar,
-    background,
   });
 
   if (!user) throw new Error("Error creating User");
@@ -64,7 +62,7 @@ async function updateUserService(
   userId,
   userIdLogged
 ) {
-  if (!name && !username && !email && !password && !avatar && !background)
+  if (!name && !username && !email && !password && !avatar)
     throw new Error("Submit at least one field to update the user");
 
   const user = await userRepositories.findByIdUserRepository(userId);
@@ -80,7 +78,6 @@ async function updateUserService(
     email,
     password,
     avatar,
-    background
   );
 
   return { message: "User successfully updated!" };

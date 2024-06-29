@@ -3,17 +3,16 @@ const createBoardController = async (req, res) => {
     try {
         const { name } = req.body;
         const userId = req.userId;
-
         if (!name) {
             return res.status(400).send({
                 message: "Submit all fields for registration",
             });
         }
         const board = await boardService.createService({
-            name: name,
-            user: userId,
-        });
-
+            name
+            },
+            userId,
+        );
         res.status(201).send(board);
     } catch (err) {
         res.status(500).send({ message: err.message });
