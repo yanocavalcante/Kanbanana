@@ -5,10 +5,16 @@ import { useUser } from "../../Context/UserContext"
 import { zodResolver } from '@hookform/resolvers/zod'
 import { editSchema } from '../../schemas/editSchema';
 import { editUser } from '../../services/userServices';
+import { ErrorSpan } from '../Auth/ErrorSpanStyled';
+import { useEffect } from 'react';
 
 export default function Profile() {
 
-    const {user} = useUser()
+  const {user, setUser} = useUser()
+
+  useEffect(() => {
+    setUser(user);
+  }, [user]);
 
     const {
         register, 
@@ -18,7 +24,7 @@ export default function Profile() {
 
       async function editHandleSubmit(data){
         try {
-          const response = await editUser(data)
+          const response = await editUser(data, user.id)
         } catch (error){
           console.log(error)
         }
@@ -36,14 +42,16 @@ export default function Profile() {
                 <form onSubmit={handleSubmit(editHandleSubmit)}>
                     <label>Nome</label>
                     <EditInput type="text" name="name" value={user.name} register={register}/>
+                    {errors.name && <ErrorSpan> {errors.name.message} </ ErrorSpan>}
                     <label>Usuário</label>
                     <EditInput type="text" name="username" value={user.username} register={register}/>
+                    {errors.name && <ErrorSpan> {errors.username.message} </ ErrorSpan>}
                     <label>E-mail</label>
                     <EditInput type="email" name="email" value={user.email} register={register}/>
-                    <label>Senha</label>
-                    <EditInput type="password" name="password" value={user.password} register={register}/>
-                    <label>Confirme sua nova senha</label>
-                    <EditInput type="password" name="confirmPassword" value={user.password} register={register}/>
+                    {errors.email && <ErrorSpan> {errors.email.message} </ ErrorSpan>}
+                    <label>URL da foto</label>
+                    <EditInput type="text" name="avatar" value={user.avatar} register={register}/>
+                    {errors.avatar && <ErrorSpan> {errors.avatar.message} </ ErrorSpan>}
                     <Button type="submit">Confirmar Edição</Button>
                 </form>
             </EditContainer>
