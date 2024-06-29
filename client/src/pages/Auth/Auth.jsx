@@ -111,10 +111,6 @@ const Auth = () => {
             </>
           )}
           <div className="entrar-checkbox-container">
-            <label>
-              <input type="checkbox" name={isRegistro ? 'termos' : 'manter_conectado'} />
-              {isRegistro ? 'Confirmo que aceito os termos de serviço' : 'Manter-me conectado'}
-            </label>
             <button className="entrar-container" type="submit">Entrar</button>
           </div>
         </form>
