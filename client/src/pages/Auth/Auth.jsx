@@ -36,7 +36,7 @@ const Auth = () => {
   async function signinHandleSubmit(data){
     try {
       const response = await signin(data)
-      console.log(Cookies.get("token"))
+      Cookies.set("token", response.data, { expires: 1 })
       login()
       navigate('/home')
     } catch (error){
