@@ -7,7 +7,7 @@ Na construção do front-end da plataforma serão utilizadas as seguintes tecnol
 MongoDB - Banco de Dados NoSQL baseado em documentos.
 ExpressJS - Framework Backend de NodeJS para aplicações web.
 ReactJS - Biblioteca JS para desenvolvimento de interfaces de usuário.
-NodeJS - Ambiente de execução JS
+NodeJS - Ambiente de execução JS.
 
 
 
