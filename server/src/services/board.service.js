@@ -1,6 +1,6 @@
 import boardRepositories from "../repositories/board.repositories.js";
 
-const createBoardService = async ({ name }, userId) => {
+const createService = async ({ name }, userId) => {
     if (!name) throw new Error("Submit all fields for registration");
 
     const { id } = await boardRepositories.createBoardRepository(name, userId);
@@ -11,7 +11,7 @@ const createBoardService = async ({ name }, userId) => {
     };
 };
 
-const findAllService = async (offset, limit) => {
+const findAllService = async (offset, limit, currentUrl) => {
     limit = Number(limit);
     offset = Number(offset);
 
@@ -85,7 +85,7 @@ const updateService = async (id, name) => {
 };
 
 export default {
-    createBoardService,
+    createService,
     findAllService,
     findByIdService,
     updateService,

@@ -25,7 +25,7 @@ const findAllBoardController = async (req, res) => {
     const currentUrl = req.baseUrl;
 
     try {
-        const boards = await boardService.findAllBoardService(
+        const boards = await boardService.findAllService(
             limit,
             offset,
             currentUrl
@@ -40,7 +40,7 @@ const findBoardByIdBoardController = async (req, res) => {
     const { id } = req.params;
 
     try {
-        const board = await boardService.findBoardByIdService(id);
+        const board = await boardService.findByIdService(id);
         return res.send(board);
     } catch (e) {
         res.status(404).send(e.message);
@@ -52,7 +52,7 @@ const updateBoardController = async (req, res) => {
     const userId = req.userId;
 
     try {
-        await boardService.updateBoardService(id, name, userId);
+        await boardService.updateService(id, name, userId);
 
         return res.send({ message: "Board successfully updated!" });
     } catch (e) {
