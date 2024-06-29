@@ -1,7 +1,6 @@
 import boardRepositories from "../repositories/board.repositories.js";
 
 const createBoardService = async ({ name }, userId) => {
-    const name = name;
     if (!name) throw new Error("Submit all fields for registration");
 
     const { id } = await boardRepositories.createBoardRepository(name, userId);

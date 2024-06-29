@@ -6,7 +6,7 @@ import { validId } from "../middlewares/global.middlewares.js";
 const boardRouter = Router();
 
 boardRouter.get("/", boardController.findAllBoardController);
-boardRouter.get("/:id", boardController.findByIdBoardController);
+boardRouter.get("/:id", boardController.findBoardByIdBoardController);
 
 boardRouter.use(authMiddleware);
 boardRouter.post("/create", boardController.createBoardController);

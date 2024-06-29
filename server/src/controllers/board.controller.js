@@ -36,7 +36,7 @@ const findAllBoardController = async (req, res) => {
     }
 };
 
-const findBoardByIdController = async (req, res) => {
+const findBoardByIdBoardController = async (req, res) => {
     const { id } = req.params;
 
     try {
@@ -63,6 +63,6 @@ const updateBoardController = async (req, res) => {
 export default {
     createBoardController,
     findAllBoardController,
-    findBoardByIdController,
+    findBoardByIdBoardController,
     updateBoardController,
 };
