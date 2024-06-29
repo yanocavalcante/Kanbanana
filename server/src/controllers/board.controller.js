@@ -1,105 +1,68 @@
-import {
-    createService,
-    findAllService,
-    countBoards,
-    findByIdService,
-    updateService,
-} from "../services/board.service.js";
-
-const create = async (req, res) => {
+import boardService from "../services/board.service.js";
+const createBoardController = async (req, res) => {
     try {
         const { name } = req.body;
-        const userId = req.userId
+        const userId = req.userId;
 
         if (!name) {
             return res.status(400).send({
                 message: "Submit all fields for registration",
             });
         }
-        await createService({
+        const board = await boardService.createService({
             name: name,
             user: userId,
         });
 
-        res.status(201).send({ message: "Board created" });
+        res.status(201).send(board);
     } catch (err) {
         res.status(500).send({ message: err.message });
     }
 };
 
-const findAll = async (req, res) => {
+const findAllBoardController = async (req, res) => {
+    const { limit, offset } = req.query;
+    const currentUrl = req.baseUrl;
+
     try {
-        let { limit, offset } = req.query;
-        limit = Number(limit);
-        offset = Number(offset);
-
-        if (!limit) {
-            limit = 5;
-        }
-
-        if (!offset) {
-            offset = 0;
-        }
-
-        const boards = await findAllService(offset, limit);
-        const total = await countBoards();
-        const currentUrl = req.baseUrl;
-
-        const next = offset + limit;
-        const nextUrl =
-            next < total ? `${currentUrl}?limit=${limit}&offset=${next}` : null;
-        const previous = offset - limit < 0 ? null : offset - limit;
-        const previousUrl =
-            previous != null
-                ? `${currentUrl}?limit=${limit}&offset=${previous}`
-                : null;
-
-        if (!boards) {
-            return res.status(404).json({ message: "Boards not found" });
-        }
-
-        res.send({
-            nextUrl,
-            previousUrl,
+        const boards = await boardService.findAllBoardService(
             limit,
             offset,
-            total,
-            results: boards.map((Item) => ({
-                id: Item._id,
-                name: Item.name,
-                columnToDo: Item.columnToDo,
-                columnDoing: Item.columnDoing,
-                columnDone: Item.columnDone,
-                createdAt: Item.createdAt,
-            })),
-        });
-    } catch (err) {
-        res.status(500).send({ message: err.message });
+            currentUrl
+        );
+        return res.send(boards);
+    } catch (e) {
+        res.status(500).send(e.message);
     }
 };
 
-const findById = async (req, res) => {
+const findBoardByIdController = async (req, res) => {
+    const { id } = req.params;
+
     try {
-        const board = await findByIdService(req.params.id);
-        if (!board) {
-            return res.status(404).send({ message: 'Board not found' });
-        }
-        res.send(board);
-    } catch (error) {
-        res.status(500).send({ message: error.message });
+        const board = await boardService.findBoardByIdService(id);
+        return res.send(board);
+    } catch (e) {
+        res.status(404).send(e.message);
     }
 };
+const updateBoardController = async (req, res) => {
+    const { name } = req.body;
+    const { id } = req.params;
+    const userId = req.userId;
 
-const update = async (req, res) => {
     try {
-        const board = await updateService(req.params.id, req.body);
-        if (!board) {
-            return res.status(404).send({ message: 'Board not found' });
-        }
-        res.send(board);
-    } catch (error) {
-        res.status(500).send({ message: error.message });
+        await boardService.updateBoardService(id, name, userId);
+
+        return res.send({ message: "Board successfully updated!" });
+    } catch (e) {
+        return res.status(500).send(e.message);
     }
 };
 
-export { create, findAll, findById, update};
+export default {
+    createBoardController,
+    findAllBoardController,
+    findBoardByIdController,
+    updateBoardController,
+};
