@@ -9,7 +9,7 @@ export function signup(data) {
     const body = {
         ...data,
         username: generateUsername(data.name),
-        avatar: "https://upload.wikimedia.org/wikipedia/pt/8/86/Avatar_Aang.png",
+        avatar: "https://static-00.iconduck.com/assets.00/profile-circle-icon-2048x2048-cqe5466q.png",
     };
     const response = axios.post(`${baseURL}/user/create`, body);
     return response;
