@@ -30,8 +30,6 @@ export async function userLogged() {
 }
 
 export function editUser(body, id) {
-
-    delete body.confirmPassword
     const response = axios.patch(`${baseURL}/user/update/${id}`, body, {
         headers: {
             Authorization: `Bearer ${Cookies.get("token")}`,
