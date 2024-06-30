@@ -1,11 +1,14 @@
 import boardRepositories from "../repositories/board.repositories.js";
+import userRepositories from "../repositories/user.repositories.js";
 
 const createService = async ({ name }, userId) => {
     if (!name) throw new Error("Submit all fields for registration");
-    const { id } = await boardRepositories.createBoardRepository(name, userId);
+    const new_board = await boardRepositories.createBoardRepository(name, userId);
+    await userRepositories.addBoardInUserRepository(userId, new_board);
     return {
         message: "Board created successfully!",
-        board: { id, name },
+        board: { name },
+        id: new_board._id,
     };
 };
 
@@ -56,14 +59,13 @@ const findAllService = async (limit, offset, currentUrl) => {
 
 const findByIdService = async (id) => {
     const board = await boardRepositories.findBoardByIdRepository(id);
-
     if (!board) throw new Error("Board not found");
 
     return {
         id: board._id,
         name: board.name,
-        username: board.user.username,
-        avatar: board.user.avatar,
+        username: board.users.username,
+        avatar: board.users.avatar,
     };
 };
 
@@ -73,7 +75,7 @@ const updateService = async (id, name, userId) => {
     const board = await boardRepositories.findBoardByIdRepository(id);
     if (!board) throw new Error("Board not found");
 
-    if (board.user._id != userId)
+    if (board.users[0]._id != userId)
         throw new Error("You didn't create this Board");
     await boardRepositories.updateBoardRepository(id, name);
 };
@@ -82,14 +84,26 @@ const deleteService = async (id, userId) => {
     const board = await boardRepositories.findBoardByIdRepository(id);
     if (!board) throw new Error("Board not found");
 
-    if (board.user._id != userId) throw new Error("You didn't create this Board");
+    if (board.users[0]._id != userId) throw new Error("You didn't create this Board");
 
     await boardRepositories.deleteBoardRepository(id);
 };
+
+const addUserInBoardService = async (id, email) => {
+    const board = await boardRepositories.findBoardByIdRepository(id);
+    if (!board) throw new Error("Board not found");
+    const user = await userRepositories.findByEmailUserRepository(email);
+    if (!user) throw new Error("User not found");
+
+    await boardRepositories.addUserInBoardRepository(id, user._id);
+    await userRepositories.addBoardInUserRepository(user._id, board);
+};
+
 export default {
     createService,
     findAllService,
     findByIdService,
     updateService,
     deleteService,
+    addUserInBoardService,
 };
