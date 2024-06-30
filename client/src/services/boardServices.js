@@ -18,17 +18,18 @@ export function getAllBoardsByOwner(id){
     return response
 }
 
-export function createBoard(body) {
-    const response = axios.post(`${baseURL}/board/create`, body, {
+export async function createBoard(boardname) {
+    let body = { name: boardname}
+    const response = await axios.post(`${baseURL}/board/create`, body, {
         headers: {
             Authorization: `Bearer ${Cookies.get("token")}` 
         }
     })
-    return response
+    return response.data.board
 }
 
 
-export function editBoard(body, id) {
+export function updateBoard(body, id) {
     const response = axios.patch(`${baseURL}/board/update/${id}`, body, {
       headers: {
         Authorization: `Bearer ${Cookies.get("token")}`,
