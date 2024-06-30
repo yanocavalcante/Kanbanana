@@ -81,7 +81,7 @@ export default function Home() {
                 <Title>Seus Kanbans</Title>
                 <KanbanList id="kanbanList">
                     {kanbanList.map((item, index) => (
-                        <KanbanItem key={index} onClick={() => alert(`Entrando em: ${item}...`)}>
+                        <KanbanItem key={index} onClick={navigate(`/home/workarea/${selectedKanban._id}`)}>
                             <div>{item}</div>
                         </KanbanItem>
                     ))}
