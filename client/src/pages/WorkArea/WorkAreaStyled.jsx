@@ -10,7 +10,7 @@ export const Header = styled.header`
   z-index: 1000;
 `;
 
-export const Navbar = styled.nav`
+export const NavbarWork = styled.nav`
   display: flex;
   justify-content: space-between;
   align-items: center;
