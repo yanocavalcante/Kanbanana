@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     OuterContainer,
     Container,
@@ -17,6 +17,8 @@ import {
     CancelButton,
     Input
 } from './HomeStyled';
+import { createBoard } from '../../services/boardServices';
+import { useNavigate } from 'react-router-dom';
 
 export default function Home() {
     const [kanbanList, setKanbanList] = useState([]);
@@ -26,21 +28,46 @@ export default function Home() {
     const [selectedKanban, setSelectedKanban] = useState(null);
     const [newKanbanTitle, setNewKanbanTitle] = useState('');
 
+    useEffect(() => {
+        getKanbanList()
+    }, [])
+
+    const navigate = useNavigate()
+
+    async function getKanbanList() {
+        try {
+            const response = await getAllBoardsByOwner()
+            setKanbanList(response)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     const handleDeleteKanban = (item) => {
         setSelectedKanban(item);
         setShowDeleteModal(false);
         setShowConfirmModal(true);
     };
 
-    const handleConfirmDelete = () => {
+    const handleConfirmDelete = async () => {
         alert(`Excluindo: ${selectedKanban}...`);
-        setKanbanList(kanbanList.filter(item => item !== selectedKanban));
+        try {
+            const response = await deleteBoard(selectedKanban._id)
+            setKanbanList(kanbanList.filter(item => item !== selectedKanban));
+        } catch (error) {
+            console.log(error)
+        }
         setShowConfirmModal(false);
     };
 
-    const handleAddKanban = () => {
+    const handleAddKanban = async () => {
         if (newKanbanTitle.trim()) {
-            setKanbanList([...kanbanList, newKanbanTitle.trim()]);
+            try {
+                const response = await createBoard(newKanbanTitle)
+                setKanbanList(...response)
+            } catch (error) {
+                console.log(error)
+            }
             setShowAddModal(false);
             setNewKanbanTitle('');
         } else {

@@ -12,10 +12,6 @@ export default function Profile() {
 
   const {user, setUser} = useUser()
 
-  useEffect(()=>{
-    setUser(user)
-  }, [user, setUser])
-
     const {
         register, 
         handleSubmit,
