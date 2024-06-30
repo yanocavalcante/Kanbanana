@@ -58,7 +58,12 @@ export default function Home() {
         if (newKanbanTitle.trim()) {
             try {
                 const response = await createBoard(newKanbanTitle)
-                setKanbanList(...response)
+                console.log(response)
+                if (!kanbanList){
+                    setKanbanList(([response]))
+                } else{
+                    setKanbanList((antigaList) => [...antigaList, response])
+                }
             } catch (error) {
                 console.log(error)
             }
