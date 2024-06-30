@@ -23,6 +23,7 @@ import {
   Button,
   FloatingMenu,
 } from './WorkAreaStyled';
+import { updateBoard } from '../../services/boardServices';
 
 const Kanbanana = () => {
   const [isMenuActive, setIsMenuActive] = useState(false);
@@ -111,9 +112,13 @@ const Kanbanana = () => {
     }
   };
 
-  const saveChanges = () => {
-    console.log('Changes saved');
-    // implementear pra salvar o kambas aq
+  const saveChanges = async () => {
+    try {
+      const response = await updateBoard(currentBoard)
+      console.log('Changes saved');
+    } catch (error) {
+      console.log(error)
+    }
   };
 
   const handleDragStart = (e, task, container) => {
