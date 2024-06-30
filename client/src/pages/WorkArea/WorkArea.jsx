@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import Navbar from '../../components/Navbar/Navbar';
 import {
@@ -42,6 +42,9 @@ const Kanbanana = () => {
   const { id } = useParams();
   const [currentBoard, setCurrentBoard] = useState({});
 
+  const taskDescRef = useRef(null);
+  const editTaskDescRef = useRef(null);
+
   useEffect(() => {
     const fetchBoard = async () => {
       try {
@@ -71,14 +74,15 @@ const Kanbanana = () => {
   };
 
   const addTask = () => {
-    const taskDesc = document.getElementById('task-desc').value;
+    const taskDesc = taskDescRef.current.value;
     const newTasks = { ...tasks, [currentTaskContainer]: [...tasks[currentTaskContainer], taskDesc] };
     setTasks(newTasks);
+    taskDescRef.current.value = ''; // Limpa o campo de texto após adicionar a tarefa
     setShowTaskPopup(false);
   };
 
   const updateTask = () => {
-    const editTaskDesc = document.getElementById('edit-task-desc').value;
+    const editTaskDesc = editTaskDescRef.current.value;
     const updatedTasks = tasks[currentTaskContainer].map(task => 
       task === currentTask ? editTaskDesc : task
     );
@@ -113,7 +117,7 @@ const Kanbanana = () => {
 
   const saveChanges = () => {
     console.log('Changes saved');
-    // implementear pra salvar o kambas aq
+    // implementar para salvar o kanban
   };
 
   const handleDragStart = (e, task, container) => {
@@ -257,7 +261,7 @@ const Kanbanana = () => {
         <PopupContent>
           <Close onClick={closePopup}>&times;</Close>
           <h3>Adicionar Tarefa</h3>
-          <TextArea id="task-desc" rows="5" placeholder="Descrição da tarefa"></TextArea>
+          <TextArea id="task-desc" ref={taskDescRef} rows="5" placeholder="Descrição da tarefa"></TextArea>
           <Button onClick={addTask}>Adicionar</Button>
         </PopupContent>
       </Popup>
@@ -266,7 +270,7 @@ const Kanbanana = () => {
         <PopupContent>
           <Close onClick={closePopup}>&times;</Close>
           <h3>Editar Tarefa</h3>
-          <TextArea id="edit-task-desc" rows="5" defaultValue={currentTask}></TextArea>
+          <TextArea id="edit-task-desc" ref={editTaskDescRef} rows="5" defaultValue={currentTask}></TextArea>
           <Button onClick={updateTask}>Atualizar</Button>
           <Button onClick={deleteTask}>Excluir</Button>
         </PopupContent>
@@ -287,7 +291,7 @@ const Kanbanana = () => {
           <h3>Compartilhar Kanban</h3>
           <p>Compartilhe este kanban com seus colaboradores:</p>
           <Input id="kanban-email" type="email" value={email} onChange={handleEmailChange} placeholder="Email do colaborador" />
-          <Button onClick={shareKanban}>Compartilhar</Button>
+          <Button onClick={() => shareKanban(email)}>Compartilhar</Button>
         </PopupContent>
       </Popup>
     </>
