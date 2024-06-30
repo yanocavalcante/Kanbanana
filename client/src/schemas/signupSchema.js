@@ -2,6 +2,7 @@ import { z } from 'zod'
 
 export const signupSchema = z.object({
     name: z.string().min(3, {message: "Nome deve ter no mínimo 3 caracteres"})
+    .max(25, {message: "Nome deve ter no máximo 25 caracteres"})
     .transform( (name) => 
         name
             .trim()

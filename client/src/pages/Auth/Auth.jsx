@@ -36,7 +36,7 @@ const Auth = () => {
   async function signinHandleSubmit(data){
     try {
       const response = await signin(data)
-      Cookies.set("token", response.data.token, { expires: 1 })
+      Cookies.set("token", response.data, { expires: 1 })
       login()
       navigate('/home')
     } catch (error){
@@ -47,7 +47,7 @@ const Auth = () => {
   async function signupHandleSubmit(data){
     try {
       const response = await signup(data)
-      Cookies.set("token", response.data.token, { expires: 1 })
+      Cookies.set("token", response.data, { expires: 1 })
       login()
       navigate('/home')
     } catch (error){
@@ -111,10 +111,6 @@ const Auth = () => {
             </>
           )}
           <div className="entrar-checkbox-container">
-            <label>
-              <input type="checkbox" name={isRegistro ? 'termos' : 'manter_conectado'} />
-              {isRegistro ? 'Confirmo que aceito os termos de serviço' : 'Manter-me conectado'}
-            </label>
             <button className="entrar-container" type="submit">Entrar</button>
           </div>
         </form>

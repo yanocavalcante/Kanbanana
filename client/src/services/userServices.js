@@ -9,31 +9,28 @@ export function signup(data) {
     const body = {
         ...data,
         username: generateUsername(data.name),
-        avatar: "https://upload.wikimedia.org/wikipedia/pt/8/86/Avatar_Aang.png",
+        avatar: "https://static-00.iconduck.com/assets.00/profile-circle-icon-2048x2048-cqe5466q.png",
     };
-    const response = axios.post(`${baseURL}/user/`, body);
+    const response = axios.post(`${baseURL}/user/create`, body);
     return response;
 }
 
 export function signin(data) {
-    const response = axios.post(`${baseURL}/auth/`, data);
+    const response = axios.post(`${baseURL}/auth/login`, data);
     return response;
 }
 
 export async function userLogged() {
-    const response = await axios.get(`${baseURL}/user/`, {
+    const response = await axios.get(`${baseURL}/user/findById`, {
         headers: {
             Authorization: `Bearer ${Cookies.get("token")}`
         }
     })
-    return response.data[0]
+    return response.data
 }
 
-export function editUser(body) {
-    const {user} = useUser()
-
-    delete body.confirmPassword
-    const response = axios.patch(`${baseURL}/user/${user.id}`, body, {
+export function editUser(body, id) {
+    const response = axios.patch(`${baseURL}/user/update/${id}`, body, {
         headers: {
             Authorization: `Bearer ${Cookies.get("token")}`,
         }

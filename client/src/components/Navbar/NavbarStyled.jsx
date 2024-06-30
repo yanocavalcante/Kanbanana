@@ -15,6 +15,9 @@ export const Nav = styled.nav`
 
     h2 {
         padding-left: 0.5rem;
+        @media (max-width: 768px) {
+            font-size: 1rem;
+        }
     }
 
 `
@@ -39,22 +42,4 @@ export const Logo = styled.img`
     object-fit: cover;
     cursor: pointer;
     padding-left: 2em;
-`
-
-export const UserSpace = styled.section`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    max-width: 100%;
-    gap: 1rem;
-
-    h2 {
-        right: 2rem;
-        font-size: 0.7rem;
-        transition: all 0.3s;
-    }
-
-    h2:hover{
-        color: #363636;
-    }
 `

@@ -9,6 +9,11 @@ export const ProfilePage = styled.div`
     margin: 0 auto;
     padding-top: 4rem;
     gap: 10rem;
+    @media (max-width: 768px) {
+        flex-direction: column;
+        padding-top: 0rem;
+        gap: 0rem;
+    }
 `
 
 export const ProfileContainer = styled.div`
@@ -17,6 +22,10 @@ export const ProfileContainer = styled.div`
     align-items: center;
     justify-content: center;
     min-height: 60vh;
+    @media (max-width: 768px) {
+        justify-content: normal;
+        min-height: 50vh;
+    }
 
     img {
         width: 250px;
@@ -37,10 +46,14 @@ export const EditContainer = styled.div`
     display: flex;
     flex-direction: column;
     width: 25%;
+    @media (max-width: 768px) {
+        width: 70%;
+        padding-bottom: 4rem;
+    }
 
     form {
         align-items: flex-start;
-        padding-top: 1rem;
+        padding-top: 1rem;  
     }
 `
 
