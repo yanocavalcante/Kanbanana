@@ -7,7 +7,7 @@ import {
   Navbar,
   NavbarBrand,
   MenuToggle,
-  NavbarNav,
+  NavbarNavWork,
   NavItem,
   Main,
   Quadro,
