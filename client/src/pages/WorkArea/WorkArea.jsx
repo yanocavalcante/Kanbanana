@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Navbar from '../../components/Navbar/Navbar';
-import Kanban from '../../components/Kanban/Kanban';
-// import { cards } from '../../../Datas';
 import {
   Header,
-  NavbarWork,
   NavbarBrand,
   MenuToggle,
   NavbarNav,
@@ -24,6 +21,7 @@ import {
   TextArea,
   Input,
   Button,
+  FloatingMenu,
 } from './WorkAreaStyled';
 
 const Kanbanana = () => {
@@ -34,6 +32,12 @@ const Kanbanana = () => {
   const [showCompartilharKanbanPopup, setShowCompartilharKanbanPopup] = useState(false);
   const [currentTaskContainer, setCurrentTaskContainer] = useState(null);
   const [email, setEmail] = useState('');
+  const [tasks, setTasks] = useState({
+    todo: [],
+    doing: [],
+    done: []
+  });
+  const [currentTask, setCurrentTask] = useState(null);
 
   const { id } = useParams();
   const [currentBoard, setCurrentBoard] = useState({});
@@ -68,43 +72,23 @@ const Kanbanana = () => {
 
   const addTask = () => {
     const taskDesc = document.getElementById('task-desc').value;
-    const newTask = document.createElement('div');
-    newTask.classList.add('task');
-    newTask.draggable = true;
-    newTask.textContent = taskDesc;
-
-    // Evento para editar tarefa
-    newTask.addEventListener('click', function () {
-      const editTaskDesc = document.getElementById('edit-task-desc');
-      editTaskDesc.value = this.textContent;
-      setShowEditTaskPopup(true);
-      setCurrentTaskContainer(this);
-    });
-
-    // Evento para drag and drop
-    newTask.addEventListener('dragstart', function (e) {
-      e.dataTransfer.setData('text/plain', e.target.id);
-      setTimeout(() => {
-        newTask.classList.add('dragging');
-      }, 0);
-    });
-
-    newTask.addEventListener('dragend', function () {
-      newTask.classList.remove('dragging');
-    });
-
-    currentTaskContainer.appendChild(newTask);
+    const newTasks = { ...tasks, [currentTaskContainer]: [...tasks[currentTaskContainer], taskDesc] };
+    setTasks(newTasks);
     setShowTaskPopup(false);
   };
 
   const updateTask = () => {
     const editTaskDesc = document.getElementById('edit-task-desc').value;
-    currentTaskContainer.textContent = editTaskDesc;
+    const updatedTasks = tasks[currentTaskContainer].map(task => 
+      task === currentTask ? editTaskDesc : task
+    );
+    setTasks({ ...tasks, [currentTaskContainer]: updatedTasks });
     setShowEditTaskPopup(false);
   };
 
   const deleteTask = () => {
-    currentTaskContainer.remove();
+    const updatedTasks = tasks[currentTaskContainer].filter(task => task !== currentTask);
+    setTasks({ ...tasks, [currentTaskContainer]: updatedTasks });
     setShowEditTaskPopup(false);
   };
 
@@ -121,11 +105,41 @@ const Kanbanana = () => {
 
   const shareKanban = async (email) => {
     try {
-      const response = await addUserInBoard(email)
-    } catch (error){
-      console.log(error)
+      const response = await addUserInBoard(email);
+    } catch (error) {
+      console.log(error);
     }
-  }
+  };
+
+  const saveChanges = () => {
+    console.log('Changes saved');
+    // implementear pra salvar o kambas aq
+  };
+
+  const handleDragStart = (e, task, container) => {
+    e.dataTransfer.setData('task', task);
+    e.dataTransfer.setData('source', container);
+    setTimeout(() => {
+      e.target.classList.add('dragging');
+    }, 0);
+  };
+
+  const handleDragEnd = (e) => {
+    e.target.classList.remove('dragging');
+  };
+
+  const handleDrop = (e, targetContainer) => {
+    const task = e.dataTransfer.getData('task');
+    const sourceContainer = e.dataTransfer.getData('source');
+
+    if (sourceContainer !== targetContainer) {
+      setTasks(prevTasks => ({
+        ...prevTasks,
+        [sourceContainer]: prevTasks[sourceContainer].filter(t => t !== task),
+        [targetContainer]: [...prevTasks[targetContainer], task]
+      }));
+    }
+  };
 
   return (
     <>
@@ -133,20 +147,26 @@ const Kanbanana = () => {
         <Navbar>
           <NavbarBrand>Kanbanana</NavbarBrand>
           <MenuToggle onClick={toggleMenu}>&#9776;</MenuToggle>
-          <NavbarNav active={isMenuActive}>
-            <NavItem>
-              <a href="#" id="retornar-workspaces-btn">
-                Retornar a Workspaces
-              </a>
-            </NavItem>
-            <NavItem>
-              <a href="#" id="compartilhar-kanban-btn" onClick={() => setShowCompartilharKanbanPopup(true)}>
-                Compartilhar Kanban
-              </a>
-            </NavItem>
-          </NavbarNav>
         </Navbar>
       </Header>
+
+      <FloatingMenu active={isMenuActive}>
+        <NavItem>
+          <a href="#" id="retornar-workspaces-btn">
+            Retornar a Workspaces
+          </a>
+        </NavItem>
+        <NavItem>
+          <a href="#" id="compartilhar-kanban-btn" onClick={() => setShowCompartilharKanbanPopup(true)}>
+            Compartilhar Kanban
+          </a>
+        </NavItem>
+        <NavItem onClick={saveChanges}>
+          <a href="#" id="salvar-alteracoes-btn">
+            Salvar Alterações
+          </a>
+        </NavItem>
+      </FloatingMenu>
 
       <Main>
         <Quadro>
@@ -154,23 +174,81 @@ const Kanbanana = () => {
           <Column id="todo">
             <ColumnTitle>
               <div>To do</div>
-              <AddTaskBtn onClick={() => openTaskPopup(document.getElementById('todo'))}>+</AddTaskBtn>
+              <AddTaskBtn onClick={() => openTaskPopup('todo')}>+</AddTaskBtn>
             </ColumnTitle>
-            <TaskContainer></TaskContainer>
+            <TaskContainer
+              className="task-container"
+              onDrop={(e) => handleDrop(e, 'todo')}
+              onDragOver={(e) => e.preventDefault()}
+            >
+              {tasks.todo.map((task, index) => (
+                <Task
+                  key={index}
+                  draggable
+                  onDragStart={(e) => handleDragStart(e, task, 'todo')}
+                  onDragEnd={handleDragEnd}
+                  onClick={() => {
+                    setCurrentTaskContainer('todo');
+                    setCurrentTask(task);
+                    setShowEditTaskPopup(true);
+                  }}
+                >
+                  {task}
+                </Task>
+              ))}
+            </TaskContainer>
           </Column>
           <Column id="doing">
             <ColumnTitle>
               <div>Doing</div>
-              <AddTaskBtn onClick={() => openTaskPopup(document.getElementById('doing'))}>+</AddTaskBtn>
             </ColumnTitle>
-            <TaskContainer></TaskContainer>
+            <TaskContainer
+              className="task-container"
+              onDrop={(e) => handleDrop(e, 'doing')}
+              onDragOver={(e) => e.preventDefault()}
+            >
+              {tasks.doing.map((task, index) => (
+                <Task
+                  key={index}
+                  draggable
+                  onDragStart={(e) => handleDragStart(e, task, 'doing')}
+                  onDragEnd={handleDragEnd}
+                  onClick={() => {
+                    setCurrentTaskContainer('doing');
+                    setCurrentTask(task);
+                    setShowEditTaskPopup(true);
+                  }}
+                >
+                  {task}
+                </Task>
+              ))}
+            </TaskContainer>
           </Column>
           <Column id="done">
             <ColumnTitle>
               <div>Done</div>
-              <AddTaskBtn onClick={() => openTaskPopup(document.getElementById('done'))}>+</AddTaskBtn>
             </ColumnTitle>
-            <TaskContainer></TaskContainer>
+            <TaskContainer
+              className="task-container"
+              onDrop={(e) => handleDrop(e, 'done')}
+              onDragOver={(e) => e.preventDefault()}
+            >
+              {tasks.done.map((task, index) => (
+                <Task
+                  key={index}
+                  draggable
+                  onDragStart={(e) => handleDragStart(e, task, 'done')}
+                  onDragEnd={handleDragEnd}
+                  onClick={() => {
+                    setCurrentTaskContainer('done');
+                    setCurrentTask(task);
+                    setShowEditTaskPopup(true);
+                  }}
+                >
+                  {task}
+                </Task>
+              ))}
+            </TaskContainer>
           </Column>
         </Quadro>
       </Main>
@@ -188,7 +266,7 @@ const Kanbanana = () => {
         <PopupContent>
           <Close onClick={closePopup}>&times;</Close>
           <h3>Editar Tarefa</h3>
-          <TextArea id="edit-task-desc" rows="5"></TextArea>
+          <TextArea id="edit-task-desc" rows="5" defaultValue={currentTask}></TextArea>
           <Button onClick={updateTask}>Atualizar</Button>
           <Button onClick={deleteTask}>Excluir</Button>
         </PopupContent>
