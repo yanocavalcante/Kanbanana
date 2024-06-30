@@ -5,7 +5,7 @@ import {
   Header,
   NavbarBrand,
   MenuToggle,
-  NavbarNav,
+  NavbarNavWork,
   NavItem,
   Main,
   Quadro,
