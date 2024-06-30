@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Navbar from '../../components/Navbar/Navbar';
 import Kanban from '../../components/Kanban/Kanban';
 import { cards } from '../../../Datas';
@@ -32,6 +32,18 @@ const Kanbanana = () => {
   const [showEditBoardNamePopup, setShowEditBoardNamePopup] = useState(false);
   const [showCompartilharKanbanPopup, setShowCompartilharKanbanPopup] = useState(false);
   const [currentTaskContainer, setCurrentTaskContainer] = useState(null);
+
+  const { id } = useParams()
+  const [ currentBoard, setCurrentBoard ] = useState[{}]
+
+  useEffect(() => {
+    try {
+      const response = getBoardById(id)
+      setCurrentBoard(response)
+    } catch (error) {
+      console.log(error)
+    }
+  }, [])
 
   const toggleMenu = () => {
     setIsMenuActive(!isMenuActive);
