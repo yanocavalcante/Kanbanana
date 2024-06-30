@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import Board from './Board.js';
 import bcrypt from 'bcrypt';
 
 const UserSchema = new mongoose.Schema({
@@ -23,7 +24,8 @@ const UserSchema = new mongoose.Schema({
     avatar : {
         type : String,
         required : true
-    }
+    },
+    boards : [Board.schema]
 });
 
 UserSchema.pre("save", async function (next) {

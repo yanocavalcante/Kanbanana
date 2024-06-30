@@ -5,11 +5,11 @@ const BoardSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    user: {
+    users: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
         required: true,
-    },
+    }],
     createdAt: {
         type: Date,
         default: Date.now(),
