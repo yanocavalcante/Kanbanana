@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import Navbar from '../../components/Navbar/Navbar';
 import Kanban from '../../components/Kanban/Kanban';
 // import { cards } from '../../../Datas';
@@ -32,18 +33,22 @@ const Kanbanana = () => {
   const [showEditBoardNamePopup, setShowEditBoardNamePopup] = useState(false);
   const [showCompartilharKanbanPopup, setShowCompartilharKanbanPopup] = useState(false);
   const [currentTaskContainer, setCurrentTaskContainer] = useState(null);
+  const [email, setEmail] = useState('');
 
-  const { id } = useParams()
-  const [ currentBoard, setCurrentBoard ] = useState[{}]
+  const { id } = useParams();
+  const [currentBoard, setCurrentBoard] = useState({});
 
   useEffect(() => {
-    try {
-      const response = getBoardById(id)
-      setCurrentBoard(response)
-    } catch (error) {
-      console.log(error)
-    }
-  }, [])
+    const fetchBoard = async () => {
+      try {
+        const response = await getBoardById(id);
+        setCurrentBoard(response);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchBoard();
+  }, [id]);
 
   const toggleMenu = () => {
     setIsMenuActive(!isMenuActive);
@@ -109,6 +114,14 @@ const Kanbanana = () => {
     boardTitle.textContent = editBoardName;
     setShowEditBoardNamePopup(false);
   };
+
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+  };
+
+  const shareKanban = {
+    //logica para enviar o kanban
+  }
 
   return (
     <>
@@ -191,7 +204,8 @@ const Kanbanana = () => {
           <Close onClick={closePopup}>&times;</Close>
           <h3>Compartilhar Kanban</h3>
           <p>Compartilhe este kanban com seus colaboradores:</p>
-          <Input id="kanban-link" type="text" value="Email" readOnly />
+          <Input id="kanban-email" type="email" value={email} onChange={handleEmailChange} placeholder="Email do colaborador" />
+          <Button onClick={shareKanban}>Compartilhar</Button>
         </PopupContent>
       </Popup>
     </>
