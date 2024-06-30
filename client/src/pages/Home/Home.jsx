@@ -19,6 +19,7 @@ import {
 } from './HomeStyled';
 import { createBoard } from '../../services/boardServices';
 import { useNavigate } from 'react-router-dom';
+import { useUser } from "../../Context/UserContext"
 
 export default function Home() {
     const [kanbanList, setKanbanList] = useState([]);
@@ -28,20 +29,13 @@ export default function Home() {
     const [selectedKanban, setSelectedKanban] = useState(null);
     const [newKanbanTitle, setNewKanbanTitle] = useState('');
 
+    const {user} = useUser()
+
     useEffect(() => {
-        getKanbanList()
+        setKanbanList(user.boards)
     }, [])
 
     const navigate = useNavigate()
-
-    async function getKanbanList() {
-        try {
-            const response = await getAllBoardsByOwner()
-            setKanbanList(response)
-        } catch (error) {
-            console.log(error)
-        }
-    }
 
     const handleDeleteKanban = (item) => {
         setSelectedKanban(item);
@@ -80,11 +74,14 @@ export default function Home() {
             <Container>
                 <Title>Seus Kanbans</Title>
                 <KanbanList id="kanbanList">
-                    {kanbanList.map((item, index) => (
+                    {kanbanList ?(
+                    kanbanList.map((item, index) => (
                         <KanbanItem key={index} onClick={navigate(`/home/workarea/${selectedKanban._id}`)}>
                             <div>{item}</div>
                         </KanbanItem>
-                    ))}
+                    ))) : (
+                        null
+                    )}
                 </KanbanList>
                 <ButtonsContainer>
                     <Button className="delete-button" onClick={() => setShowDeleteModal(true)}>Excluir Kanban</Button>
@@ -98,11 +95,14 @@ export default function Home() {
                     <h2>Excluir Kanban</h2>
                     <p>Selecione um kanban para excluir:</p>
                     <KanbanOptions id="kanbanOptions">
-                        {kanbanList.map((item, index) => (
+                        { kanbanList? (
+                        kanbanList.map((item, index) => (
                             <KanbanOption key={index} onClick={() => handleDeleteKanban(item)}>
                                 {item}
                             </KanbanOption>
-                        ))}
+                        ))): (
+                            null
+                        )}
                     </KanbanOptions>
                 </ModalContent>
             </Modal>
