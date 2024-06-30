@@ -23,7 +23,7 @@ import {
   Button,
   FloatingMenu,
 } from './WorkAreaStyled';
-import { updateBoard } from '../../services/boardServices';
+import { getBoardById, updateBoard } from '../../services/boardServices';
 
 const Kanbanana = () => {
   const [isMenuActive, setIsMenuActive] = useState(false);
@@ -118,7 +118,7 @@ const Kanbanana = () => {
 
   const saveChanges = async () => {
     try {
-      const response = await updateBoard(currentBoard)
+      const response = await updateBoard(currentBoard, currentBoard._id)
       console.log('Changes saved');
     } catch (error) {
       console.log(error)
@@ -161,7 +161,7 @@ const Kanbanana = () => {
 
       <FloatingMenu active={isMenuActive}>
         <NavItem>
-          <a href="#" id="retornar-workspaces-btn">
+          <a href="/home" id="retornar-workspaces-btn">
             Retornar a Workspaces
           </a>
         </NavItem>

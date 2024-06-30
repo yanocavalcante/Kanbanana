@@ -7,8 +7,7 @@ const createService = async ({ name }, userId) => {
     await userRepositories.addBoardInUserRepository(userId, new_board);
     return {
         message: "Board created successfully!",
-        board: { name },
-        id: new_board._id,
+        board: new_board,
     };
 };
 
