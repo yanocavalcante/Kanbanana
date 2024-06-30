@@ -1,4 +1,3 @@
-import e from "express";
 import boardService from "../services/board.service.js";
 const createBoardController = async (req, res) => {
     try {
