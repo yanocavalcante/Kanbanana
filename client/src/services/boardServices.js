@@ -10,8 +10,13 @@ export function getAllBoards(){
 
 export function getBoardById(id) {
     const response = axios.get(`${baseURL}/board/${id}`)
-    return response;
+    return response
   }
+
+export function getAllBoardsByOwner(id){
+    const response = axios.get(`${baseURL}/board/getAllBoardsByOwner/${id}`)
+    return response
+}
 
 export function createBoard(body) {
     const response = axios.post(`${baseURL}/board/create`, body, {
