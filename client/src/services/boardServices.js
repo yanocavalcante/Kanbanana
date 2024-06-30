@@ -45,3 +45,12 @@ export function editBoard(body, id) {
     })
     return response
   }
+
+  export function addUserInBoard(email){
+    const response = axios.patch(`${baseURL}/board/${email}/addUser`, {
+      headers: {
+        Authorization: `Bearer ${Cookies.get("token")}`,
+      }
+    })
+    return response
+  }

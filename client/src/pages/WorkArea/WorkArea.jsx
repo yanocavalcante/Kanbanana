@@ -119,8 +119,12 @@ const Kanbanana = () => {
     setEmail(e.target.value);
   };
 
-  const shareKanban = {
-    //logica para enviar o kanban
+  const shareKanban = async (email) => {
+    try {
+      const response = await addUserInBoard(email)
+    } catch (error){
+      console.log(error)
+    }
   }
 
   return (
