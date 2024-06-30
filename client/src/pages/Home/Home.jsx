@@ -16,7 +16,7 @@ import {
     ConfirmButton,
     CancelButton,
     Input
-} from './KanbanStyled';
+} from './HomeStyled';
 
 export default function Home() {
     const [kanbanList, setKanbanList] = useState([]);
