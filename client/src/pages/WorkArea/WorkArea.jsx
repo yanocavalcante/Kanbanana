@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import Navbar from '../../components/Navbar/Navbar';
 import Kanban from '../../components/Kanban/Kanban';
-import { cards } from '../../../Datas';
+// import { cards } from '../../../Datas';
 import {
   Header,
-  Navbar,
+  NavbarWork,
   NavbarBrand,
   MenuToggle,
-  NavbarNavWork,
+  NavbarNav,
   NavItem,
   Main,
   Quadro,
