@@ -124,21 +124,21 @@ const Kanbanana = () => {
           <QuadroTitle id="edit-board-title" onClick={() => setShowEditBoardNamePopup(true)}>Quadro</QuadroTitle>
           <Column id="todo">
             <ColumnTitle>
-              <div>A Fazer</div>
+              <div>To do</div>
               <AddTaskBtn onClick={() => openTaskPopup(document.getElementById('todo'))}>+</AddTaskBtn>
             </ColumnTitle>
             <TaskContainer></TaskContainer>
           </Column>
           <Column id="doing">
             <ColumnTitle>
-              <div>Fazendo</div>
+              <div>Doing</div>
               <AddTaskBtn onClick={() => openTaskPopup(document.getElementById('doing'))}>+</AddTaskBtn>
             </ColumnTitle>
             <TaskContainer></TaskContainer>
           </Column>
           <Column id="done">
             <ColumnTitle>
-              <div>Feito</div>
+              <div>Done</div>
               <AddTaskBtn onClick={() => openTaskPopup(document.getElementById('done'))}>+</AddTaskBtn>
             </ColumnTitle>
             <TaskContainer></TaskContainer>
