@@ -1,7 +1,7 @@
 import Board from "../models/Board.js";
 
 function createBoardRepository(name, userId) {
-    return Board.create({ name, user: userId });
+    return Board.create({ name, users: userId });
 }
 
 function findAllBoardRepository(offset, limit) {
@@ -32,7 +32,7 @@ function deleteBoardRepository(id) {
     return Board.findOneAndDelete({ _id: id });
 }
 
-function addUserBoardRepository(id, userId) {
+function addUserInBoardRepository(id, userId) {
     return Board.findOneAndUpdate({_id: id }, { $addToSet: { users: userId } })
 }
 
@@ -44,5 +44,5 @@ export default {
     findBoardsByUserIdRepository,
     updateBoardRepository,
     deleteBoardRepository,
-    addUserBoardRepository,
+    addUserInBoardRepository,
 };

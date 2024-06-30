@@ -38,7 +38,6 @@ const findAllBoardController = async (req, res) => {
 
 const findBoardByIdBoardController = async (req, res) => {
     const { id } = req.params;
-
     try {
         const board = await boardService.findByIdService(id);
         return res.send(board);
@@ -72,12 +71,12 @@ const deleteBoardController = async (req, res) => {
     }
 };
 
-const addUserBoardController = async (req, res) => {
+const addUserInBoardController = async (req, res) => {
     const { id } = req.params;
     const { email } = req.body;
 
     try {
-        await boardService.addUserBoardService(id, email);
+        await boardService.addUserInBoardService(id, email);
         return res.send({ message: "User added to board" });
     } catch (e) {
         return res.status(500).send(e.message);
@@ -90,5 +89,5 @@ export default {
     findBoardByIdBoardController,
     updateBoardController,
     deleteBoardController,
-    addUserBoardController,
+    addUserInBoardController,
 };

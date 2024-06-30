@@ -10,6 +10,7 @@ async function createUserController(req, res) {
       email,
       password,
       avatar,
+      boards: [],
     });
     res.status(201).send(token);
   } catch (e) {

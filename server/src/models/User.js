@@ -23,7 +23,11 @@ const UserSchema = new mongoose.Schema({
     avatar : {
         type : String,
         required : true
-    }
+    },
+    boards : [{
+        type : mongoose.Schema.Types.ObjectId,
+        ref : 'Board'
+    }]
 });
 
 UserSchema.pre("save", async function (next) {
