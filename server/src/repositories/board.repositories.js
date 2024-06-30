@@ -13,7 +13,7 @@ function findAllBoardRepository(offset, limit) {
 }
 
 function findBoardByIdRepository(id) {
-    return Board.findById(id).populate("user");
+    return Board.findById(id).populate("users");
 }
 
 function countBoardRepository() {
@@ -32,6 +32,10 @@ function deleteBoardRepository(id) {
     return Board.findOneAndDelete({ _id: id });
 }
 
+function addUserBoardRepository(id, userId) {
+    return Board.findOneAndUpdate({_id: id }, { $addToSet: { users: userId } })
+}
+
 export default {
     createBoardRepository,
     findAllBoardRepository,
@@ -40,4 +44,5 @@ export default {
     findBoardsByUserIdRepository,
     updateBoardRepository,
     deleteBoardRepository,
+    addUserBoardRepository,
 };

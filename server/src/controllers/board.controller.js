@@ -1,3 +1,4 @@
+import e from "express";
 import boardService from "../services/board.service.js";
 const createBoardController = async (req, res) => {
     try {
@@ -72,10 +73,23 @@ const deleteBoardController = async (req, res) => {
     }
 };
 
+const addUserBoardController = async (req, res) => {
+    const { id } = req.params;
+    const { email } = req.body;
+
+    try {
+        await boardService.addUserBoardService(id, email);
+        return res.send({ message: "User added to board" });
+    } catch (e) {
+        return res.status(500).send(e.message);
+    }
+}
+
 export default {
     createBoardController,
     findAllBoardController,
     findBoardByIdBoardController,
     updateBoardController,
     deleteBoardController,
+    addUserBoardController,
 };

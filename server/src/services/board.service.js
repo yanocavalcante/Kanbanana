@@ -1,4 +1,5 @@
 import boardRepositories from "../repositories/board.repositories.js";
+import userRepositories from "../repositories/user.repositories.js";
 
 const createService = async ({ name }, userId) => {
     if (!name) throw new Error("Submit all fields for registration");
@@ -86,10 +87,22 @@ const deleteService = async (id, userId) => {
 
     await boardRepositories.deleteBoardRepository(id);
 };
+
+const addUserBoardService = async (id, email) => {
+    const board = await boardRepositories.findBoardByIdRepository(id);
+    if (!board) throw new Error("Board not found");
+
+    const user = await userRepositories.findByEmailUserRepository(email);
+    if (!user) throw new Error("User not found");
+
+    await boardRepositories.addUserBoardRepository(id, user._id);
+
+}
 export default {
     createService,
     findAllService,
     findByIdService,
     updateService,
     deleteService,
+    addUserBoardService,
 };

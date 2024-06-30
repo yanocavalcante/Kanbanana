@@ -13,6 +13,7 @@ boardRouter.post("/create", boardController.createBoardController);
 
 boardRouter.use(validId);
 boardRouter.patch("/update/:id", boardController.updateBoardController);
+boardRouter.patch("/update/:id/addUser", boardController.addUserBoardController);
 boardRouter.delete("/delete/:id", boardController.deleteBoardController)
 
 export default boardRouter;
