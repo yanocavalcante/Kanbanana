@@ -1,76 +1,81 @@
-import {
-    createService,
-    findAllService,
-    countBoards,
-} from "../services/board.service.js";
-
-const create = async (req, res) => {
+import boardService from "../services/board.service.js";
+const createBoardController = async (req, res) => {
     try {
         const { name } = req.body;
+        const userId = req.userId;
         if (!name) {
             return res.status(400).send({
                 message: "Submit all fields for registration",
             });
         }
-        await createService({
-            name,
-        });
-
-        res.status(201).send({ message: "Board created" });
+        const board = await boardService.createService(
+            {
+                name,
+            },
+            userId
+        );
+        res.status(201).send(board);
     } catch (err) {
         res.status(500).send({ message: err.message });
     }
 };
 
-const findAll = async (req, res) => {
+const findAllBoardController = async (req, res) => {
+    const { limit, offset } = req.query;
+    const currentUrl = req.baseUrl;
+
     try {
-        let { limit, offset } = req.query;
-        limit = Number(limit);
-        offset = Number(offset);
-
-        if (!limit) {
-            limit = 5;
-        }
-
-        if (!offset) {
-            offset = 0;
-        }
-
-        const boards = await findAllService(offset, limit);
-        const total = await countBoards();
-        const currentUrl = req.baseUrl;
-
-        const next = offset + limit;
-        const nextUrl =
-            next < total ? `${currentUrl}?limit=${limit}&offset=${next}` : null;
-        const previous = offset - limit < 0 ? null : offset - limit;
-        const previousUrl =
-            previous != null
-                ? `${currentUrl}?limit=${limit}&offset=${previous}`
-                : null;
-
-        if (!boards) {
-            return res.status(404).json({ message: "Boards not found" });
-        }
-
-        res.send({
-            nextUrl,
-            previousUrl,
+        const boards = await boardService.findAllService(
             limit,
             offset,
-            total,
-            results: boards.map((Item) => ({
-                id: Item._id,
-                name: Item.name,
-                columnToDo: Item.columnToDo,
-                columnDoing: Item.columnDoing,
-                columnDone: Item.columnDone,
-                createdAt: Item.createdAt,
-            })),
-        });
-    } catch (err) {
-        res.status(500).send({ message: err.message });
+            currentUrl
+        );
+        return res.send(boards);
+    } catch (e) {
+        res.status(500).send(e.message);
     }
 };
 
-export { create, findAll };
+const findBoardByIdBoardController = async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const board = await boardService.findByIdService(id);
+        return res.send(board);
+    } catch (e) {
+        res.status(404).send(e.message);
+    }
+};
+const updateBoardController = async (req, res) => {
+    const { name } = req.body;
+    const { id } = req.params;
+    const userId = req.userId;
+
+    try {
+        await boardService.updateService(id, name, userId);
+
+        return res.send({ message: "Board successfully updated!" });
+    } catch (e) {
+        return res.status(500).send(e.message);
+    }
+};
+
+const deleteBoardController = async (req, res) => {
+    const { id } = req.params;
+    const userId = req.userId;
+
+    try {
+        await boardService.deleteService(id, userId);
+        return res.send({ message: "Board deleted successfully" });
+    } catch (e) {
+        return res.status(500).send(e.message);
+    }
+};
+
+export default {
+    createBoardController,
+    findAllBoardController,
+    findBoardByIdBoardController,
+    updateBoardController,
+    deleteBoardController,
+};
