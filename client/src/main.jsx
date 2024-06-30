@@ -6,6 +6,7 @@ import { GlobalStyled } from './GlobalStyled.jsx'
 import ErrorPage from './pages/ErrorPage/ErrorPage.jsx'
 import Navbar from './components/Navbar/Navbar.jsx'
 import Home from './pages/Home/Home.jsx'
+import WorkArea from './pages/WorkArea/WorkArea.jsx'
 import Profile from './pages/Profile/Profile.jsx'
 import UserProvider from './Context/UserContext.jsx'
 import AuthProvider from './Context/AuthContext.jsx';
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
     children: [{
       path: "/home",
       element: <Home />
+      },
+      {
+        path: "/home/workarea/:id",
+        element: <WorkArea />
       },
       {
         path: "/home/profile",
