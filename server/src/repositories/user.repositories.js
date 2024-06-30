@@ -45,8 +45,8 @@ const updateUserRepository = (
     }
   );
 
-  function addBoardInUserRepository(userId, boardId) {
-    return User.findOneAndUpdate({_id: userId }, { $addToSet: { boards: boardId } });
+  function addBoardInUserRepository(userId, board) {
+    return User.findOneAndUpdate({_id: userId }, { $addToSet: { boards: board } });
 }
 
 export default {
