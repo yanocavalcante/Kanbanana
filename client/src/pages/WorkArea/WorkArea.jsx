@@ -23,7 +23,7 @@ import {
   TextArea,
   Input,
   Button,
-} from './KanbananaStyles';
+} from './WorkAreaStyled';
 
 const Kanbanana = () => {
   const [isMenuActive, setIsMenuActive] = useState(false);
