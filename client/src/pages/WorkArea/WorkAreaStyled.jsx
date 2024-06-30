@@ -10,13 +10,6 @@ export const Header = styled.header`
   z-index: 1000;
 `;
 
-export const NavbarWork = styled.nav`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 20px;
-`;
-
 export const NavbarBrand = styled.div`
   font-size: 1.5em;
   font-weight: bold;
@@ -72,8 +65,21 @@ export const NavItem = styled.li`
   }
 `;
 
+export const FloatingMenu = styled.div`
+  position: fixed;
+  top: 100px; /* Ajustado para colocar o menu flutuante mais para baixo */
+  right: 20px;
+  background-color: #FAF7D2;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  z-index: 1001;
+  display: flex;
+  align-items: center; /* Alinha os itens no centro verticalmente */
+`;
+
 export const Main = styled.main`
-  margin-top: 60px;
+  margin-top: 120px; /* Ajustado para colocar o conteúdo mais para baixo */
   padding: 20px;
 `;
 
@@ -88,6 +94,7 @@ export const Quadro = styled.div`
   position: relative;
   padding: 30px 10px 10px;
   border-radius: 10px;
+  margin-top: 20px; /* Ajustado para colocar o quadro mais para baixo */
 `;
 
 export const QuadroTitle = styled.div`
@@ -124,6 +131,11 @@ export const AddTaskBtn = styled.button`
   cursor: pointer;
   font-size: 1.2em;
   line-height: 0;
+
+  &:hover {
+    background-color: #74370D;
+    color: #FAF7D2;
+  }
 `;
 
 export const TaskContainer = styled.div`
@@ -137,6 +149,12 @@ export const Task = styled.div`
   padding: 10px;
   border-radius: 5px;
   cursor: pointer;
+  border: 1px solid #4C2509;
+  user-select: none;
+
+  &:hover {
+    background-color: #e0c4a1;
+  }
 `;
 
 export const Popup = styled.div`
