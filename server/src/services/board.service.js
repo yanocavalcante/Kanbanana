@@ -3,11 +3,10 @@ import userRepositories from "../repositories/user.repositories.js";
 
 const createService = async ({ name }, userId) => {
     if (!name) throw new Error("Submit all fields for registration");
-    const new_board = await boardRepositories.createBoardRepository(name, userId);
-    await userRepositories.addBoardInUserRepository(userId, new_board);
+    const {id} = boardRepositories.createBoardRepository(name, userId);
     return {
         message: "Board created successfully!",
-        board: new_board,
+        board: { name },
     };
 };
 
@@ -50,8 +49,8 @@ const findAllService = async (limit, offset, currentUrl) => {
         results: boards.map((board) => ({
             id: board._id,
             name: board.name,
-            username: board.user.username,
-            avatar: board.user.avatar,
+            username: board.users.username,
+            avatar: board.users.avatar,
         })),
     };
 };
@@ -74,8 +73,6 @@ const updateService = async (id, name, userId) => {
     const board = await boardRepositories.findBoardByIdRepository(id);
     if (!board) throw new Error("Board not found");
 
-    if (board.users[0]._id != userId)
-        throw new Error("You didn't create this Board");
     await boardRepositories.updateBoardRepository(id, name);
 };
 
@@ -95,7 +92,6 @@ const addUserInBoardService = async (id, email) => {
     if (!user) throw new Error("User not found");
 
     await boardRepositories.addUserInBoardRepository(id, user._id);
-    await userRepositories.addBoardInUserRepository(user._id, board);
 };
 
 export default {
