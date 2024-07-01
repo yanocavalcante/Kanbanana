@@ -1,3 +1,4 @@
+import e from "express";
 import boardService from "../services/board.service.js";
 
 
@@ -32,7 +33,30 @@ const findAllBoardController = async (req, res) => {
             offset,
             currentUrl
         );
-        return res.send(boards);
+        if (req.cond == true) {
+            return res.send(boards);
+        }else{
+            return boards;
+        }
+    } catch (e) {
+        res.status(500).send(e.message);
+    }
+};
+const findAllBoardsUserController = async (req, res) => {
+    req.cond = false;
+    const userId = req.userId;
+    try {
+        const boards = await findAllBoardController(req, res);
+        let boardsUser = [];
+
+        for (let board of boards.results) {
+            for (let user of board.users) {
+                if (user._id == userId) {
+                    boardsUser.push(board);
+                }
+            }
+        }
+        return res.send(boardsUser);
     } catch (e) {
         res.status(500).send(e.message);
     }
@@ -88,6 +112,7 @@ const addUserInBoardController = async (req, res) => {
 export default {
     createBoardController,
     findAllBoardController,
+    findAllBoardsUserController,
     findBoardByIdBoardController,
     updateBoardController,
     deleteBoardController,

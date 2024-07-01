@@ -9,6 +9,7 @@ boardRouter.get("/", boardController.findAllBoardController);
 boardRouter.get("/:id", boardController.findBoardByIdBoardController);
 
 boardRouter.use(authMiddleware);
+boardRouter.get("/byUser/:id", boardController.findAllBoardsUserController);
 boardRouter.post("/create", boardController.createBoardController);
 
 boardRouter.use(validId);
