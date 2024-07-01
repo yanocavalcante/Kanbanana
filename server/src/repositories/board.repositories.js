@@ -32,7 +32,7 @@ function deleteBoardRepository(id) {
     return Board.findOneAndDelete({ _id: id });
 }
 
-function addUserBoardRepository(id, userId) {
+function addUserInBoardRepository(id, userId) {
     return Board.findOneAndUpdate({_id: id }, { $addToSet: { users: userId } })
 }
 
@@ -44,5 +44,5 @@ export default {
     findBoardsByUserIdRepository,
     updateBoardRepository,
     deleteBoardRepository,
-    addUserBoardRepository,
+    addUserInBoardRepository,
 };
