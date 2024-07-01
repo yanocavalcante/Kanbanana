@@ -38,13 +38,15 @@ const Kanbanana = () => {
     doing: [],
     done: []
   });
-  const [currentTask, setCurrentTask] = useState(null);
+  const [currentTask, setCurrentTask] = useState('');
+  const [editTaskText, setEditTaskText] = useState('');
 
   const { id } = useParams();
   const [currentBoard, setCurrentBoard] = useState({});
 
   const taskDescRef = useRef(null);
   const editTaskDescRef = useRef(null);
+  const boardNameRef = useRef(null);
 
   useEffect(() => {
     const fetchBoard = async () => {
@@ -72,6 +74,10 @@ const Kanbanana = () => {
     setShowEditTaskPopup(false);
     setShowEditBoardNamePopup(false);
     setShowCompartilharKanbanPopup(false);
+    if (taskDescRef.current) taskDescRef.current.value = '';
+    if (editTaskDescRef.current) editTaskDescRef.current.value = '';
+    if (boardNameRef.current) boardNameRef.current.value = '';
+    setEmail('');
   };
 
   const addTask = () => {
@@ -99,7 +105,7 @@ const Kanbanana = () => {
 
   const updateBoardName = () => {
     const boardTitle = document.getElementById('edit-board-title');
-    const editBoardName = document.getElementById('edit-board-name').value;
+    const editBoardName = boardNameRef.current.value;
     boardTitle.textContent = editBoardName;
     setShowEditBoardNamePopup(false);
   };
@@ -150,6 +156,13 @@ const Kanbanana = () => {
     }
   };
 
+  const openEditTaskPopup = (task, container) => {
+    setCurrentTask(task);
+    setEditTaskText(task);
+    setCurrentTaskContainer(container);
+    setShowEditTaskPopup(true);
+  };
+
   return (
     <>
       <Header>
@@ -196,11 +209,7 @@ const Kanbanana = () => {
                   draggable
                   onDragStart={(e) => handleDragStart(e, task, 'todo')}
                   onDragEnd={handleDragEnd}
-                  onClick={() => {
-                    setCurrentTaskContainer('todo');
-                    setCurrentTask(task);
-                    setShowEditTaskPopup(true);
-                  }}
+                  onClick={() => openEditTaskPopup(task, 'todo')}
                 >
                   {task}
                 </Task>
@@ -222,11 +231,7 @@ const Kanbanana = () => {
                   draggable
                   onDragStart={(e) => handleDragStart(e, task, 'doing')}
                   onDragEnd={handleDragEnd}
-                  onClick={() => {
-                    setCurrentTaskContainer('doing');
-                    setCurrentTask(task);
-                    setShowEditTaskPopup(true);
-                  }}
+                  onClick={() => openEditTaskPopup(task, 'doing')}
                 >
                   {task}
                 </Task>
@@ -244,14 +249,14 @@ const Kanbanana = () => {
             >
               {tasks.done.map((task, index) => (
                 <Task
-                key={index}
-                draggable
-                onDragStart={(e) => handleDragStart(e, task, container)}
-                onDragEnd={handleDragEnd}
-                onClick={() => openEditTaskPopup(task, container)} // Atualize esta linha
-              >
-                {task}
-              </Task>
+                  key={index}
+                  draggable
+                  onDragStart={(e) => handleDragStart(e, task, 'done')}
+                  onDragEnd={handleDragEnd}
+                  onClick={() => openEditTaskPopup(task, 'done')}
+                >
+                  {task}
+                </Task>
               ))}
             </TaskContainer>
           </Column>
@@ -271,7 +276,7 @@ const Kanbanana = () => {
         <PopupContent>
           <Close onClick={closePopup}>&times;</Close>
           <h3>Editar Tarefa</h3>
-          <TextArea id="edit-task-desc" ref={editTaskDescRef} rows="5" defaultValue={currentTask}></TextArea>
+          <TextArea id="edit-task-desc" ref={editTaskDescRef} rows="5" value={editTaskText} onChange={(e) => setEditTaskText(e.target.value)}></TextArea>
           <Button onClick={updateTask}>Atualizar</Button>
           <Button onClick={deleteTask}>Excluir</Button>
         </PopupContent>
@@ -281,7 +286,7 @@ const Kanbanana = () => {
         <PopupContent>
           <Close onClick={closePopup}>&times;</Close>
           <h3>Editar Nome do Quadro</h3>
-          <Input id="edit-board-name" type="text" placeholder="Nome do quadro" />
+          <Input id="edit-board-name" type="text" ref={boardNameRef} placeholder="Nome do quadro" />
           <Button onClick={updateBoardName}>Atualizar</Button>
         </PopupContent>
       </Popup>
