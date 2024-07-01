@@ -163,6 +163,23 @@ const Kanbanana = () => {
     setShowEditTaskPopup(true);
   };
 
+  // Funções para eventos de toque
+  const handleTouchStart = (e, task, container) => {
+    handleDragStart({ ...e, dataTransfer: { setData: (type, val) => { e.dataTransfer = { type, val } } } }, task, container);
+  };
+
+  const handleTouchMove = (e) => {
+    const touch = e.touches[0];
+    const element = document.elementFromPoint(touch.clientX, touch.clientY);
+    if (element && element.classList.contains('task-container')) {
+      element.ondragover = e => e.preventDefault();
+    }
+  };
+
+  const handleTouchEnd = (e, targetContainer) => {
+    handleDrop({ ...e, dataTransfer: { getData: type => e.dataTransfer[type] } }, targetContainer);
+  };
+
   return (
     <>
       <Header>
@@ -202,6 +219,8 @@ const Kanbanana = () => {
               className="task-container"
               onDrop={(e) => handleDrop(e, 'todo')}
               onDragOver={(e) => e.preventDefault()}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={(e) => handleTouchEnd(e, 'todo')}
             >
               {tasks.todo.map((task, index) => (
                 <Task
@@ -209,7 +228,7 @@ const Kanbanana = () => {
                   draggable
                   onDragStart={(e) => handleDragStart(e, task, 'todo')}
                   onDragEnd={handleDragEnd}
-                  onClick={() => openEditTaskPopup(task, 'todo')}
+                  onTouchStart={(e) => handleTouchStart(e, task, 'todo')}
                 >
                   {task}
                 </Task>
@@ -224,14 +243,15 @@ const Kanbanana = () => {
               className="task-container"
               onDrop={(e) => handleDrop(e, 'doing')}
               onDragOver={(e) => e.preventDefault()}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={(e) => handleTouchEnd(e, 'doing')}
             >
-              {tasks.doing.map((task, index) => (
-                <Task
+              {tasks.doing.map((task, index) => (                <Task
                   key={index}
                   draggable
                   onDragStart={(e) => handleDragStart(e, task, 'doing')}
                   onDragEnd={handleDragEnd}
-                  onClick={() => openEditTaskPopup(task, 'doing')}
+                  onTouchStart={(e) => handleTouchStart(e, task, 'doing')}
                 >
                   {task}
                 </Task>
@@ -246,6 +266,8 @@ const Kanbanana = () => {
               className="task-container"
               onDrop={(e) => handleDrop(e, 'done')}
               onDragOver={(e) => e.preventDefault()}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={(e) => handleTouchEnd(e, 'done')}
             >
               {tasks.done.map((task, index) => (
                 <Task
@@ -253,7 +275,7 @@ const Kanbanana = () => {
                   draggable
                   onDragStart={(e) => handleDragStart(e, task, 'done')}
                   onDragEnd={handleDragEnd}
-                  onClick={() => openEditTaskPopup(task, 'done')}
+                  onTouchStart={(e) => handleTouchStart(e, task, 'done')}
                 >
                   {task}
                 </Task>
@@ -305,3 +327,5 @@ const Kanbanana = () => {
 };
 
 export default Kanbanana;
+
+               

@@ -67,7 +67,7 @@ export const NavItem = styled.li`
 
 export const FloatingMenu = styled.div`
   position: center;
-  top: 100px; /* Ajustado para colocar o menu flutuante mais para baixo */
+  top: 100px;
   right: 20px;
   background-color: #D0B339;
   padding: 10px;
@@ -76,8 +76,19 @@ export const FloatingMenu = styled.div`
   display: flex;
   align-items: stretch;
   justify-content: space-around;
-  margin-top: 20px /* Alinha os itens no centro verticalmente */
+  margin-top: 20px;
+  font-size: 16px; /* Tamanho padrão da fonte para telas maiores */
+
+  @media (max-width: 720px) {
+    font-size: 11px; /* Tamanho da fonte ajustado para telas menores */
+  }
+
+  @media (max-width: 479px) {
+    font-size: 7px; /* Tamanho da fonte ajustado para telas menores */
+  }
 `;
+
+
 
 export const Main = styled.main`
   margin-top: 120px; /* Ajustado para colocar o conteúdo mais para baixo */
