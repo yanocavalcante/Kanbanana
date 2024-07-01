@@ -1,20 +1,13 @@
 import styled from 'styled-components';
 
 export const Header = styled.header`
-  background-color: #4C2509;
+  background-color: #D0B339;
   color: #FAF7D2;
   padding: 10px 0;
   position: fixed;
   width: 100%;
   top: 0;
   z-index: 1000;
-`;
-
-export const Navbar = styled.nav`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 20px;
 `;
 
 export const NavbarBrand = styled.div`
@@ -59,7 +52,7 @@ export const NavItem = styled.li`
     border-radius: 8px;
     padding: 5px;
     color: #4C2509;
-    background-color: #FAF7D2;
+    background-color: #D0B339;
     text-decoration: none;
     font-size: 1em;
     padding: 8px 12px;
@@ -72,36 +65,54 @@ export const NavItem = styled.li`
   }
 `;
 
+export const FloatingMenu = styled.div`
+  position: center;
+  top: 100px; /* Ajustado para colocar o menu flutuante mais para baixo */
+  right: 20px;
+  background-color: #D0B339;
+  padding: 10px;
+  box-shadow: 0 0 10px rgba(184, 19, 19, 0.1);
+  z-index: 1001;
+  display: flex;
+  align-items: stretch;
+  justify-content: space-around;
+  margin-top: 20px /* Alinha os itens no centro verticalmente */
+`;
+
 export const Main = styled.main`
-  margin-top: 60px;
+  margin-top: 120px; /* Ajustado para colocar o conteúdo mais para baixo */
   padding: 20px;
+  margin-right: 25PX;
 `;
 
 export const Quadro = styled.div`
   display: flex;
   justify-content: space-between;
   width: 100%;
-  background-color: #FAF7D2;
-  color: #4C2509;
-  border: 2px solid #4C2509;
+  background-color: #D0B354;
+  color: #231204;
+  border: 4px solid #4C2509;
   margin-bottom: 20px;
   position: relative;
   padding: 30px 10px 10px;
   border-radius: 10px;
+  margin-top: 20px; /* Ajustado para colocar o quadro mais para baixo */
 `;
 
 export const QuadroTitle = styled.div`
+
   font-size: 1.2em;
   font-weight: bold;
   position: absolute;
   top: 5px;
+  margin-bottom: 10px;
   left: 10px;
   cursor: pointer;
 `;
 
 export const Column = styled.div`
   width: 30%;
-  background-color: #F5D0A9;
+  background-color: #FFFF60;
   padding: 10px;
   border-radius: 5px;
 `;
@@ -124,6 +135,11 @@ export const AddTaskBtn = styled.button`
   cursor: pointer;
   font-size: 1.2em;
   line-height: 0;
+
+  &:hover {
+    background-color: #74370D;
+    color: #FAF7D2;
+  }
 `;
 
 export const TaskContainer = styled.div`
@@ -137,6 +153,14 @@ export const Task = styled.div`
   padding: 10px;
   border-radius: 5px;
   cursor: pointer;
+  border: 1px solid #4C2509;
+  user-select: none;
+  word-break: break-word;
+  white-space: pre-wrap; /* Permite que o texto quebre em várias linhas */
+
+  &:hover {
+    background-color: #e0c4a1;
+  }
 `;
 
 export const Popup = styled.div`
@@ -178,20 +202,26 @@ export const Close = styled.span`
 `;
 
 export const TextArea = styled.textarea`
-  width: 100%;
+  width: 96%;
   margin: 10px 0;
   padding: 10px;
+  align-items: center;
   border-radius: 5px;
   border: 1px solid #4C2509;
+  resize: none;
 `;
 
 export const Input = styled.input`
   width: 100%;
+  max-width: 300px;  /* Defina um tamanho fixo */
   margin: 10px 0;
   padding: 10px;
   border-radius: 5px;
   border: 1px solid #4C2509;
+  box-sizing: border-box;
+  resize: none;  /* Desabilita o redimensionamento */
 `;
+
 
 export const Button = styled.button`
   background-color: #4C2509;
