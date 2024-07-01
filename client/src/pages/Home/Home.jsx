@@ -17,7 +17,7 @@ import {
     Input
 } from './HomeStyled';
 import { KanbanItem } from '../../components/KanbanItem/KanbanItem';
-import { createBoard } from '../../services/boardServices';
+import { createBoard, deleteBoard } from '../../services/boardServices';
 import { useUser } from "../../Context/UserContext"
 import { KanbanDelete } from '../../components/KanbanDelete/KanbanDelete';
 
@@ -32,7 +32,6 @@ export default function Home() {
     const {user} = useUser()
 
     useEffect(() => {
-        console.log(user.boards)
         setKanbanList(user.boards)
     }, [user])
 
@@ -43,7 +42,6 @@ export default function Home() {
     };
 
     const handleConfirmDelete = async () => {
-        alert(`Excluindo: ${selectedKanban}...`);
         try {
             const response = await deleteBoard(selectedKanban._id)
             setKanbanList(kanbanList.filter(item => item !== selectedKanban));
@@ -57,7 +55,6 @@ export default function Home() {
         if (newKanbanTitle.trim()) {
             try {
                 const response = await createBoard(newKanbanTitle)
-                console.log(response)
                 if (!kanbanList){
                     setKanbanList(([response]))
                 } else{
@@ -113,7 +110,6 @@ export default function Home() {
                 <ModalContent>
                     <CloseButton onClick={() => setShowConfirmModal(false)}>&times;</CloseButton>
                     <h2>Excluir Kanban</h2>
-                    <p id="confirmText">Deseja excluir: {selectedKanban}?</p>
                     <ConfirmationButtons>
                         <ConfirmButton onClick={handleConfirmDelete}>Confirmar</ConfirmButton>
                         <CancelButton onClick={() => setShowConfirmModal(false)}>Cancelar</CancelButton>

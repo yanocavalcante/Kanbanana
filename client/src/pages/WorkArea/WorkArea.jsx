@@ -23,7 +23,7 @@ import {
   Button,
   FloatingMenu,
 } from './WorkAreaStyled';
-import { getBoardById, updateBoard } from '../../services/boardServices';
+import { getBoardById, updateBoard, addUserInBoard } from '../../services/boardServices';
 
 const Kanbanana = () => {
   const [isMenuActive, setIsMenuActive] = useState(false);
