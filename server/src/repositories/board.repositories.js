@@ -9,7 +9,7 @@ function findAllBoardRepository(offset, limit) {
         .sort({ _id: -1 })
         .skip(offset)
         .limit(limit)
-        .populate("user");
+        .populate("users");
 }
 
 function findBoardByIdRepository(id) {

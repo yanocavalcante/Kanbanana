@@ -15,7 +15,7 @@ const findAllService = async (limit, offset, currentUrl) => {
     offset = Number(offset);
 
     if (!limit) {
-        limit = 5;
+        limit = 100;
     }
 
     if (!offset) {
@@ -49,8 +49,7 @@ const findAllService = async (limit, offset, currentUrl) => {
         results: boards.map((board) => ({
             id: board._id,
             name: board.name,
-            username: board.users.username,
-            avatar: board.users.avatar,
+            owner: board.users[0].username,
         })),
     };
 };
