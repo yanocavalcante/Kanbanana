@@ -244,18 +244,14 @@ const Kanbanana = () => {
             >
               {tasks.done.map((task, index) => (
                 <Task
-                  key={index}
-                  draggable
-                  onDragStart={(e) => handleDragStart(e, task, 'done')}
-                  onDragEnd={handleDragEnd}
-                  onClick={() => {
-                    setCurrentTaskContainer('done');
-                    setCurrentTask(task);
-                    setShowEditTaskPopup(true);
-                  }}
-                >
-                  {task}
-                </Task>
+                key={index}
+                draggable
+                onDragStart={(e) => handleDragStart(e, task, container)}
+                onDragEnd={handleDragEnd}
+                onClick={() => openEditTaskPopup(task, container)} // Atualize esta linha
+              >
+                {task}
+              </Task>
               ))}
             </TaskContainer>
           </Column>
