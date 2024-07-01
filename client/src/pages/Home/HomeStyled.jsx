@@ -30,6 +30,27 @@ export const KanbanList = styled.div`
     flex-wrap: wrap;
 `;
 
+export const KanbanItem = styled.button`
+    width: 150px;
+    height: 150px;
+    margin: 10px;
+    background-color: #FAF7D2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    color: #231204;
+    font-weight: bold;
+    text-align: center;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+
+    &:hover {
+        background-color: #FFFF60;
+    }
+`;
+
 export const ButtonsContainer = styled.div`
     display: flex;
     justify-content: space-around;
@@ -105,6 +126,24 @@ export const KanbanOptions = styled.div`
     align-items: center;
     max-height: 200px;
     overflow-y: auto;
+`;
+
+export const KanbanOption = styled.div`
+    margin: 5px 0;
+    padding: 10px;
+    width: 80%;
+    background-color: #FAF7D2;
+    border: 2px solid #231204;
+    border-radius: 5px;
+    color: #231204;
+    font-weight: bold;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s;
+
+    &:hover {
+        background-color: #FFFF60;
+    }
 `;
 
 export const ConfirmationButtons = styled.div`
