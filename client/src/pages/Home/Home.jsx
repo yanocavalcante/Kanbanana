@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {
+    Centerdiv,
     OuterContainer,
     Container,
     Title,
@@ -73,6 +74,7 @@ export default function Home() {
     };
 
     return (
+        <Centerdiv>
         <OuterContainer>
             <Container>
                 <Title>Seus Kanbans</Title>
@@ -132,5 +134,6 @@ export default function Home() {
                 </ModalContent>
             </Modal>
         </OuterContainer>
+        </Centerdiv>
     );
 }
