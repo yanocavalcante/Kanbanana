@@ -45,15 +45,10 @@ const updateUserRepository = (
     }
   );
 
-  function addBoardInUserRepository(userId, board) {
-    return User.findOneAndUpdate({_id: userId }, { $addToSet: { boards: board } });
-}
-
 export default {
   findByEmailUserRepository,
   createUserRepository,
   findAllUserRepository,
   findByIdUserRepository,
   updateUserRepository,
-  addBoardInUserRepository,
 };

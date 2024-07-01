@@ -3,12 +3,10 @@ import userRepositories from "../repositories/user.repositories.js";
 
 const createService = async ({ name }, userId) => {
     if (!name) throw new Error("Submit all fields for registration");
-    const new_board = await boardRepositories.createBoardRepository(name, userId);
-    await userRepositories.addBoardInUserRepository(userId, new_board);
+    const {id} = boardRepositories.createBoardRepository(name, userId);
     return {
         message: "Board created successfully!",
         board: { name },
-        id: new_board._id,
     };
 };
 
@@ -94,7 +92,6 @@ const addUserInBoardService = async (id, email) => {
     if (!user) throw new Error("User not found");
 
     await boardRepositories.addUserInBoardRepository(id, user._id);
-    await userRepositories.addBoardInUserRepository(user._id, board);
 };
 
 export default {

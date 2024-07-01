@@ -25,7 +25,6 @@ const UserSchema = new mongoose.Schema({
         type : String,
         required : true
     },
-    boards : [Board.schema]
 });
 
 UserSchema.pre("save", async function (next) {
