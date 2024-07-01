@@ -1,7 +1,7 @@
 import axios from "axios"
 import Cookies from "js-cookie"
 
-const baseURL = "http://localhost:3000";
+const baseURL = "https://kanbanana-54dp.onrender.com/";
 
 export async function getBoardById(id) {
     const response = await axios.get(`${baseURL}/board/${id}`)
