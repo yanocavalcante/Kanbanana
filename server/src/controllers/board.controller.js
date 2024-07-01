@@ -1,4 +1,6 @@
 import boardService from "../services/board.service.js";
+
+
 const createBoardController = async (req, res) => {
     try {
         const { name } = req.body;

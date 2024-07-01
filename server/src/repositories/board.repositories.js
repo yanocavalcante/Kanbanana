@@ -1,7 +1,7 @@
 import Board from "../models/Board.js";
 
 function createBoardRepository(name, userId) {
-    return Board.create({ name, user: userId });
+    return Board.create({ name, users: userId });
 }
 
 function findAllBoardRepository(offset, limit) {

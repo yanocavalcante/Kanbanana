@@ -49,8 +49,8 @@ const findAllService = async (limit, offset, currentUrl) => {
         results: boards.map((board) => ({
             id: board._id,
             name: board.name,
-            username: board.user.username,
-            avatar: board.user.avatar,
+            username: board.users.username,
+            avatar: board.users.avatar,
         })),
     };
 };
@@ -74,8 +74,6 @@ const updateService = async (id, name, userId) => {
     const board = await boardRepositories.findBoardByIdRepository(id);
     if (!board) throw new Error("Board not found");
 
-    if (board.user._id != userId)
-        throw new Error("You didn't create this Board");
     await boardRepositories.updateBoardRepository(id, name);
 };
 
@@ -83,7 +81,7 @@ const deleteService = async (id, userId) => {
     const board = await boardRepositories.findBoardByIdRepository(id);
     if (!board) throw new Error("Board not found");
 
-    if (board.user._id != userId) throw new Error("You didn't create this Board");
+    if (board.users[0]._id != userId) throw new Error("You didn't create this Board");
 
     await boardRepositories.deleteBoardRepository(id);
 };
