@@ -50,6 +50,7 @@ const findAllService = async (limit, offset, currentUrl) => {
             id: board._id,
             name: board.name,
             owner: board.users[0].username,
+            users: board.users,
         })),
     };
 };
@@ -66,7 +67,7 @@ const findByIdService = async (id) => {
     };
 };
 
-const updateService = async (id, name, userId) => {
+const updateService = async (id, name) => {
     if (!name) throw new Error("Submit at least one field to update the board");
 
     const board = await boardRepositories.findBoardByIdRepository(id);
