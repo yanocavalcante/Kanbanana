@@ -3,18 +3,17 @@ import Cookies from "js-cookie"
 
 const baseURL = "https://kanbanana-54dp.onrender.com"
 
-export function getAllBoards(){
-    const response = axios.get(`${baseURL}/board`)
-    return response
-}
-
-export function getBoardById(id) {
-    const response = axios.get(`${baseURL}/board/${id}`)
+export async function getBoardById(id) {
+    const response = await axios.get(`${baseURL}/board/${id}`)
     return response
   }
 
-export function getAllBoardsByOwner(id){
-    const response = axios.get(`${baseURL}/board/getAllBoardsByOwner/${id}`)
+export async function getAllUserBoards(){
+    const response = axios.get(`${baseURL}/board`, {
+      headers: {
+          Authorization: `Bearer ${Cookies.get("token")}` 
+      }
+  })
     return response
 }
 

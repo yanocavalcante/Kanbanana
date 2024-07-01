@@ -17,8 +17,7 @@ import {
     Input
 } from './HomeStyled';
 import { KanbanItem } from '../../components/KanbanItem/KanbanItem';
-import { createBoard, deleteBoard } from '../../services/boardServices';
-import { useUser } from "../../Context/UserContext"
+import { createBoard, deleteBoard, getAllUserBoards } from '../../services/boardServices';
 import { KanbanDelete } from '../../components/KanbanDelete/KanbanDelete';
 
 export default function Home() {
@@ -29,11 +28,13 @@ export default function Home() {
     const [selectedKanban, setSelectedKanban] = useState(null);
     const [newKanbanTitle, setNewKanbanTitle] = useState('');
 
-    const {user} = useUser()
-
     useEffect(() => {
-        setKanbanList(user.boards)
-    }, [user])
+        const findAllUserBoards = async () => {
+            const response = await getAllUserBoards()
+            setKanbanList(response)
+        }
+        findAllUserBoards()
+    }, [])
 
     const handleDeleteKanban = (item) => {
         setSelectedKanban(item);
