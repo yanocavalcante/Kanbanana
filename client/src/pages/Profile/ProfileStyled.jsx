@@ -6,7 +6,7 @@ export const OuterContainer = styled.div`
     align-items: center;
     background-color: #FFFF60;
     padding: 2rem;
-    margin-top: 20%;
+    margin-top: 60px;
     margin-bottom: 20%;
     margin-left: 5%;
     margin-right: 5%;
