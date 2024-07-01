@@ -1,19 +1,21 @@
 import axios from "axios"
 import Cookies from "js-cookie"
 
-const baseURL = "https://kanbanana-54dp.onrender.com"
+const baseURL = "http://localhost:3000"
 
 export async function getBoardById(id) {
+  console.log(id)
     const response = await axios.get(`${baseURL}/board/${id}`)
     return response
   }
 
-export async function getAllUserBoards(){
-    const response = axios.get(`${baseURL}/board`, {
+export async function getAllUserBoards(id){
+    const response = await axios.get(`${baseURL}/board/byUser/${id}`, {
       headers: {
           Authorization: `Bearer ${Cookies.get("token")}` 
       }
   })
+  console.log(response)
     return response
 }
 
@@ -29,6 +31,7 @@ export async function createBoard(boardname) {
 
 
 export function updateBoard(body, id) {
+    console.log(body)
     const response = axios.patch(`${baseURL}/board/update/${id}`, body, {
       headers: {
         Authorization: `Bearer ${Cookies.get("token")}`,
