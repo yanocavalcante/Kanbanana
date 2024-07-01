@@ -28,8 +28,6 @@ export default function Home() {
     const [selectedKanban, setSelectedKanban] = useState(null);
     const [newKanbanTitle, setNewKanbanTitle] = useState('');
 
-    const {user} = useUser()
-
     useEffect(() => {
         const findAllUserBoards = async () => {
             const response = await getAllUserBoards()
