@@ -85,8 +85,8 @@ export default function Home() {
                     )}
                 </KanbanList>
                 <ButtonsContainer>
-                    <Button className="delete-button" onClick={() => setShowDeleteModal(true)}>Excluir Kanban</Button>
                     <Button className="add-button" onClick={() => setShowAddModal(true)}>Adicionar Kanban</Button>
+                    <Button className="delete-button" onClick={() => setShowDeleteModal(true)}>Excluir Kanban</Button>
                 </ButtonsContainer>
             </Container>
 

@@ -67,18 +67,18 @@ export const Button = styled.button`
     transition: background-color 0.3s;
 
     &.delete-button {
-        background-color: #FF4136;
+        background-color: #4C2509;
 
         &:hover {
-            background-color: #FF6347;
+            background-color: #231204;
         }
     }
 
     &.add-button {
-        background-color: #28A745;
+        background-color: #74370D;
 
         &:hover {
-            background-color: #3AC169;
+            background-color: #4C2509;
         }
     }
 `;
@@ -158,11 +158,11 @@ export const ConfirmButton = styled.button`
     border-radius: 5px;
     cursor: pointer;
     font-weight: bold;
-    background-color: #FF4136;
+    background-color: #74370D;
     color: white;
 
     &:hover {
-        background-color: #FF6347;
+        background-color: #4C2509;
     }
 `;
 
@@ -172,11 +172,11 @@ export const CancelButton = styled.button`
     border-radius: 5px;
     cursor: pointer;
     font-weight: bold;
-    background-color: #AAAAAA;
-    color: white;
+    background-color: #4C2509;
+    color: #FAF7D2;
 
     &:hover {
-        background-color: #CCCCCC;
+        background-color: #231204;
     }
 `;
 
