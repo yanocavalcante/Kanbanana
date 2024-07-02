@@ -39,6 +39,7 @@ const findAllService = async (limit, offset, currentUrl) => {
             : null;
 
     // boards.shift();
+
     return {
         nextUrl,
         previousUrl,
@@ -49,8 +50,11 @@ const findAllService = async (limit, offset, currentUrl) => {
         results: boards.map((board) => ({
             id: board._id,
             name: board.name,
-            owner: board.users[0].username,
+            owner: board.users[0]?.username,
             users: board.users,
+            columnToDo: board.columnToDo,
+            columnDoing: board.columnDoing,
+            columnDone: board.columnDone
         })),
     };
 };
@@ -62,18 +66,19 @@ const findByIdService = async (id) => {
     return {
         id: board._id,
         name: board.name,
-        username: board.users.username,
-        avatar: board.users.avatar,
+        columnToDo: board.columnToDo,
+        columnDoing: board.columnDoing,
+        columnDone: board.columnDone
     };
 };
 
-const updateService = async (id, name) => {
+const updateService = async (id, name, columnToDo, columnDoing, columnDone) => {
     if (!name) throw new Error("Submit at least one field to update the board");
 
     const board = await boardRepositories.findBoardByIdRepository(id);
     if (!board) throw new Error("Board not found");
 
-    await boardRepositories.updateBoardRepository(id, name);
+    await boardRepositories.updateBoardRepository(id, name, columnToDo, columnDoing, columnDone);
 };
 
 const deleteService = async (id, userId) => {

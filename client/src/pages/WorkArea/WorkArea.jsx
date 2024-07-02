@@ -52,7 +52,8 @@ const Kanbanana = () => {
     const fetchBoard = async () => {
       try {
         const response = await getBoardById(id);
-        setCurrentBoard(response);
+        setCurrentBoard(response.data);
+        console.log(response.data)
       } catch (error) {
         console.log(error);
       }
@@ -124,7 +125,12 @@ const Kanbanana = () => {
 
   const saveChanges = async () => {
     try {
-      const response = await updateBoard(currentBoard, currentBoard._id)
+      currentBoard.columnToDo = tasks.todo
+      currentBoard.columnDoing = tasks.doing
+      currentBoard.columnDone = tasks.done
+      console.log(currentBoard)
+      let body = [currentBoard.name, currentBoard.columnToDo, currentBoard.columnDoing, currentBoard.columnDone]
+      const response = await updateBoard(body, id)
       console.log('Changes saved');
     } catch (error) {
       console.log(error)
@@ -164,7 +170,7 @@ const Kanbanana = () => {
   };
 
   return (
-    <>
+    currentBoard.id &&(<>
       <Header>
         <Navbar>
           <NavbarBrand>Kanbanana</NavbarBrand>
@@ -192,7 +198,7 @@ const Kanbanana = () => {
 
       <Main>
         <Quadro>
-          <QuadroTitle id="edit-board-title" onClick={() => setShowEditBoardNamePopup(true)}>Quadro</QuadroTitle>
+          <QuadroTitle id="edit-board-title" onClick={() => setShowEditBoardNamePopup(true)}>{currentBoard.name}</QuadroTitle>
           <Column id="todo">
             <ColumnTitle>
               <div>To do</div>
@@ -300,7 +306,7 @@ const Kanbanana = () => {
           <Button onClick={() => shareKanban(email)}>Compartilhar</Button>
         </PopupContent>
       </Popup>
-    </>
+    </>)
   );
 };
 

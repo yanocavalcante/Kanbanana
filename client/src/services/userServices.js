@@ -2,7 +2,7 @@ import axios from "axios";
 import Cookies from 'js-cookie'
 import { useUser } from "../Context/UserContext";
 
-const baseURL = "https://kanbanana-54dp.onrender.com";
+const baseURL = "https://kanbanana-54dp.onrender.com"
 
 export function signup(data) {
     delete data.confirmPassword

@@ -47,6 +47,9 @@ const findAllBoardsUserController = async (req, res) => {
     const userId = req.userId;
     try {
         const boards = await findAllBoardController(req, res);
+        if (!boards) {
+            return
+        }
         let boardsUser = [];
 
         for (let board of boards.results) {
@@ -58,8 +61,9 @@ const findAllBoardsUserController = async (req, res) => {
         }
         return res.send(boardsUser);
     } catch (e) {
+        if (!res.headersSent) {
         res.status(500).send(e.message);
-    }
+    }}
 };
 
 const findBoardByIdBoardController = async (req, res) => {
@@ -72,12 +76,17 @@ const findBoardByIdBoardController = async (req, res) => {
     }
 };
 const updateBoardController = async (req, res) => {
-    const { name } = req.body;
+    const { body } = req.body;
+    console.log(body, 'aqui')
     const { id } = req.params;
     const userId = req.userId;
+    const name = body.name
+    const columnToDo = body.columnToDo
+    const columnDoing = body.columnDoing
+    const columnDone = body.columnDone
 
     try {
-        await boardService.updateService(id, name, userId);
+        await boardService.updateService(id, name, columnToDo, columnDoing, columnDone, userId);
 
         return res.send({ message: "Board successfully updated!" });
     } catch (e) {

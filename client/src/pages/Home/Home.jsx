@@ -19,6 +19,7 @@ import {
 import { KanbanItem } from '../../components/KanbanItem/KanbanItem';
 import { createBoard, deleteBoard, getAllUserBoards } from '../../services/boardServices';
 import { KanbanDelete } from '../../components/KanbanDelete/KanbanDelete';
+import { useUser } from '../../Context/UserContext'
 
 export default function Home() {
     const [kanbanList, setKanbanList] = useState([]);
@@ -28,13 +29,15 @@ export default function Home() {
     const [selectedKanban, setSelectedKanban] = useState(null);
     const [newKanbanTitle, setNewKanbanTitle] = useState('');
 
+    const { user } = useUser()
+
     useEffect(() => {
         const findAllUserBoards = async () => {
-            const response = await getAllUserBoards()
-            setKanbanList(response)
+            const response = await getAllUserBoards(user._id)
+            setKanbanList(response.data)
         }
         findAllUserBoards()
-    }, [])
+    }, [user._id])
 
     const handleDeleteKanban = (item) => {
         setSelectedKanban(item);
@@ -56,9 +59,9 @@ export default function Home() {
         if (newKanbanTitle.trim()) {
             try {
                 const response = await createBoard(newKanbanTitle)
-                if (!kanbanList){
+                if (!kanbanList) {
                     setKanbanList(([response]))
-                } else{
+                } else {
                     setKanbanList((antigaList) => [...antigaList, response])
                 }
             } catch (error) {
@@ -72,65 +75,66 @@ export default function Home() {
     };
 
     return (
-        <Centerdiv>
-        <OuterContainer>
-            <Container>
-                <Title>Seus Kanbans</Title>
-                <KanbanList id="kanbanList">
-                    {kanbanList ?(
-                    kanbanList.map((item, index) => {
-                        return <KanbanItem key={index} name={item.name} owner={item.users[0]} id={item._id}/>
-                    })) : (
-                        null
-                    )}
-                </KanbanList>
-                <ButtonsContainer>
-                    <Button className="add-button" onClick={() => setShowAddModal(true)}>Adicionar Kanban</Button>
-                    <Button className="delete-button" onClick={() => setShowDeleteModal(true)}>Excluir Kanban</Button>
-                </ButtonsContainer>
-            </Container>
+        user._id && (
+            <Centerdiv>
+                <OuterContainer>
+                    <Container>
+                        <Title>Seus Kanbans</Title>
+                        <KanbanList id="kanbanList">
+                            {kanbanList ? (
+                                kanbanList.map((item, index) => {
+                                    return <KanbanItem key={index} name={item.name} owner={item.owner} id={item.id} />
+                                })) : (
+                                null
+                            )}
+                        </KanbanList>
+                        <ButtonsContainer>
+                            <Button className="add-button" onClick={() => setShowAddModal(true)}>Adicionar Kanban</Button>
+                            <Button className="delete-button" onClick={() => setShowDeleteModal(true)}>Excluir Kanban</Button>
+                        </ButtonsContainer>
+                    </Container>
 
-            <Modal show={showDeleteModal} id="deleteModal">
-                <ModalContent>
-                    <CloseButton onClick={() => setShowDeleteModal(false)}>&times;</CloseButton>
-                    <h2>Excluir Kanban</h2>
-                    <p>Selecione um kanban para excluir:</p>
-                    <KanbanOptions id="kanbanOptions">
-                        
-                    {kanbanList ?(
-                    kanbanList.map((item, index) => {
-                        return <KanbanDelete key={index} name={item.name} owner={item.users[0]} onclick={() => handleDeleteKanban(item)}/>
-                    })) : (
-                        null
-                    )}
-                    </KanbanOptions>
-                </ModalContent>
-            </Modal>
+                    <Modal show={showDeleteModal} id="deleteModal">
+                        <ModalContent>
+                            <CloseButton onClick={() => setShowDeleteModal(false)}>&times;</CloseButton>
+                            <h2>Excluir Kanban</h2>
+                            <p>Selecione um kanban para excluir:</p>
+                            <KanbanOptions id="kanbanOptions">
 
-            <Modal show={showConfirmModal} id="confirmModal">
-                <ModalContent>
-                    <CloseButton onClick={() => setShowConfirmModal(false)}>&times;</CloseButton>
-                    <h2>Excluir Kanban</h2>
-                    <ConfirmationButtons>
-                        <ConfirmButton onClick={handleConfirmDelete}>Confirmar</ConfirmButton>
-                        <CancelButton onClick={() => setShowConfirmModal(false)}>Cancelar</CancelButton>
-                    </ConfirmationButtons>
-                </ModalContent>
-            </Modal>
+                                {kanbanList ? (
+                                    kanbanList.map((item, index) => {
+                                        return <KanbanDelete key={index} name={item.name} owner={item.owner} onclick={() => handleDeleteKanban(item)} />
+                                    })) : (
+                                    null
+                                )}
+                            </KanbanOptions>
+                        </ModalContent>
+                    </Modal>
 
-            <Modal show={showAddModal} id="addModal">
-                <ModalContent>
-                    <CloseButton onClick={() => setShowAddModal(false)}>&times;</CloseButton>
-                    <h2>Adicionar Kanban</h2>
-                    <p>Dê um título ao seu kanban:</p>
-                    <Input type="text" id="newKanbanTitle" value={newKanbanTitle} onChange={(e) => setNewKanbanTitle(e.target.value)} placeholder="Título do Kanban" />
-                    <ConfirmationButtons>
-                        <ConfirmButton onClick={handleAddKanban}>Criar Kanban</ConfirmButton>
-                        <CancelButton onClick={() => setShowAddModal(false)}>Cancelar</CancelButton>
-                    </ConfirmationButtons>
-                </ModalContent>
-            </Modal>
-        </OuterContainer>
-        </Centerdiv>
+                    <Modal show={showConfirmModal} id="confirmModal">
+                        <ModalContent>
+                            <CloseButton onClick={() => setShowConfirmModal(false)}>&times;</CloseButton>
+                            <h2>Excluir Kanban</h2>
+                            <ConfirmationButtons>
+                                <ConfirmButton onClick={handleConfirmDelete}>Confirmar</ConfirmButton>
+                                <CancelButton onClick={() => setShowConfirmModal(false)}>Cancelar</CancelButton>
+                            </ConfirmationButtons>
+                        </ModalContent>
+                    </Modal>
+
+                    <Modal show={showAddModal} id="addModal">
+                        <ModalContent>
+                            <CloseButton onClick={() => setShowAddModal(false)}>&times;</CloseButton>
+                            <h2>Adicionar Kanban</h2>
+                            <p>Dê um título ao seu kanban:</p>
+                            <Input type="text" id="newKanbanTitle" value={newKanbanTitle} onChange={(e) => setNewKanbanTitle(e.target.value)} placeholder="Título do Kanban" />
+                            <ConfirmationButtons>
+                                <ConfirmButton onClick={handleAddKanban}>Criar Kanban</ConfirmButton>
+                                <CancelButton onClick={() => setShowAddModal(false)}>Cancelar</CancelButton>
+                            </ConfirmationButtons>
+                        </ModalContent>
+                    </Modal>
+                </OuterContainer>
+            </Centerdiv>)
     );
 }
