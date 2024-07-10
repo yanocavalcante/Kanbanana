@@ -1,32 +1,21 @@
-## Instruções para rodar o código
-
-Para rodar o código em um ambiente local, será necessário abrir dois terminais, um deles na pasta client e outra na pasta server. Em cada um dos terminais é rodado um npm install para instalar as dependências e npm run dev para iniciar.
-
-Além disso, é necessário mudar a baseURL para um host local (por exemplo: http://localhost:3000) nos arquivos "boardService.js" e "userServices.js" da pasta client/src/services.
-
-E para o back-end, criar um arquivo .env na raíz server, seguindo as informações em ".env.example".
-
-MONGODB_URI=mongodb+srv://alessandrobenedet:RNGXbqcgcHGjprrG@kanban-web.9ez6sn0.mongodb.net/?retryWrites=true&w=majority&appName=kanban-web <br />
-MONGODB_DATABASE=kanban-web <br />
-SECRET_JWT = "92a78b3414fd47b78117babd5800f9fd"
-
-### Comandos no console
-
-Para rodar o front-end:
+## Instruções
+Para testar a aplicação localmente o primeiro passo é clonar o repositório a partir da branch 'dev', que contém as configurações básicas necessárias, para isso, execute:
 ```bash
-cd client
+git clone https://github.com/yanocavalcante/Kanbanana.git
+git checkout dev
+```
+Agora, vocẽ deve configurar um arquivo '.env', onde serão armazenadas as variáveis de ambiente para o funcionamento adequado do backend da aplicação. Siga o exemplo presente em '.env.example'
+
+Em seguida, é necessário, executar o código completo tanto do backend quanto do frontend. Para isso, abra duas janelas de linha de comando e prossiga, respectivamente, para as pastas 'client/' e 'server/', em seguida, em ambas execute os seguintes comandos:
+
+```bash
 npm install
-npm run dev
+npm start
 ```
 
-Para rodar o back-end:
-```bash
-cd server
-npm install
-npm run dev
-```
+Assim, você estará instalando as dependências necessárias para as duas partes principais partes da aplicação e inicializando-as.
 
-Fluxo da aplicação:
+## Fluxo
 Ao entrar no link local iniciado pelo Vite (padrão: http://localhost:5173), o usuário estará na tela inicial de Registro ou Login, podendo escolher sua ação ao clicar no botão Registro ou no de Login. 
 
 Após autenticação, ele será redirecionado para tela Home, onde terá acesso aos seus Kanbans e poderá acessá-los clicando neles, ou também, criar/excluir os boards clicando em seus respectivos botões.
