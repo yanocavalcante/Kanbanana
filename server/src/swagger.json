@@ -1,19 +1,21 @@
 {
-    "openapi": "3.0.0",
-    "info": {
-        "title": "Kanbanana",
-        "description": "This documentation was compilled to provide informations so that you will be able to consult the API endpoints and also test all availabe routes for the Kanbanana web application. Please register and carry out the authorization so you can use our application to its full extention",
-        "contact": {
-            "email": "costumersupport@kanbanana.com"
-        }
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Breaking News API Documentation",
+    "description": "In this documentation you will be able to consult the API end-points and also test all available routes. Do not forget to register and carry out the authorization.",
+    "contact": {
+      "email": "docencia.thiago@gmail.com"
     },
-    "servers": [
-        {
-            "url": "http://localhost:3000",
-            "description": "Local Server"
-        }
-    ],
-    "paths": {"/user/": {
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000",
+      "description": "Local"
+    }
+  ],
+  "paths": {
+    "/user/create": {
       "post": {
         "summary": "Create a new user",
         "description": "Route responsible for creating a new user",
@@ -27,10 +29,10 @@
               "examples": {
                 "Users": {
                   "value": {
-                    "name": "Iago Muñoz",
-                    "username": "tomateovo",
-                    "email": "tomateovo@gmail.com",
-                    "password": "12345",
+                    "name": "Yano de Melo Cavalcante",
+                    "username": "henriqueyano",
+                    "email": "yano@gmail.com",
+                    "password": "yano1234",
                     "avatar": "https://i.imgur.com/Ry1cb5M.png"
                   }
                 }
@@ -85,10 +87,10 @@
         }
       }
     },
-    "/user/{id}/": {
+    "/user/findById/{id}": {
       "get": {
         "summary": "Search user by id",
-        "description": "Route responsible for searching for user by id",
+        "description": "Route responsible for searching for User by its id",
         "tags": ["Users"],
         "security": [{ "bearerAuth": [] }],
         "parameters": [
@@ -121,7 +123,7 @@
         }
       }
     },
-    "/user/{id}": {
+    "/user/update/{id}": {
       "patch": {
         "summary": "Update user by id",
         "description": "Route responsible for editing the user by id",
@@ -145,7 +147,7 @@
               "examples": {
                 "Users": {
                   "value": {
-                    "name": "Iago Rodrigues Muñoz"
+                    "username": "yanoc"
                   }
                 }
               }
@@ -172,9 +174,306 @@
           }
         }
       }
-    }},
-    "components": {
-        "securitySchemes": {
+    },
+    "/auth/login": {
+      "post": {
+        "summary": "Login to Kanbanana",
+        "description": "Route responsible for logging in a registered user",
+        "tags": ["Auth"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              },
+              "examples": {
+                "User": {
+                  "value": {
+                    "email": "yano@gmail.com",
+                    "password": "yano1234"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "description": "Not Found"
+          },
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/board/create": {
+      "board": {
+        "summary": "Create a new board",
+        "description": "Route responsible for creating a new Post",
+        "tags": ["Post"],
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Post"
+              },
+              "examples": {
+                "Post": {
+                  "value": {
+                    "user": "",
+                    "banner": "https://labs.tadigital.com/wp-content/uploads/2017/07/ES6-banner.jpg",
+                    "title": "ECMAScript 6",
+                    "text": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+                    "likes": [],
+                    "comments": []
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          },
+          "400": {
+            "description": "Not Found"
+          },
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schemma": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Post"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/board": {
+      "get": {
+        "summary": "Search all boards",
+        "description": "Route responsible for fetching all boards",
+        "tags": ["Post"],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "limit",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Not Found"
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Post"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/board/{id}": {
+      "get": {
+        "summary": "Search Board by Board ID",
+        "description": "Route responsible for fetching the board that matches the id sent via query params",
+        "tags": ["Post"],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "title",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Not Found"
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Post"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/board/byIdPost/{id}": {
+      "patch": {
+        "summary": "Search board by id",
+        "description": "Route responsible for fetching board by id",
+        "tags": ["Post"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "type": "string",
+            "description": "Post ID",
+            "required": true
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          },
+          "400": {
+            "description": "Not Found"
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schemma": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Post"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/board/byUserId": {
+      "get": {
+        "summary": "Search boards by User ID",
+        "description": "Route responsible for fetching boards by User ID",
+        "tags": ["Board"],
+        "responses": {
+          "400": {
+            "description": "Not Found"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Board"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/board/update/{id}": {
+      "patch": {
+        "summary": "Update a board",
+        "description": "Route responsible for updating a Boards",
+        "tags": ["Board"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "type": "string",
+            "description": "Board ID",
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Post"
+              },
+              "examples": {
+                "Post": {
+                  "value": {
+                    "banner": "",
+                    "title": "",
+                    "text": ""
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          },
+          "400": {
+            "description": "Not Found"
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schemma": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Post"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/board/delete/{id}": {
+      "delete": {
+        "summary": "Delete a board",
+        "description": "Route responsible for deleting a Post",
+        "tags": ["Board"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "type": "string",
+            "description": "Board ID",
+            "required": true
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          },
+          "400": {
+            "description": "Not Found"
+          },
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
       "bearerAuth": {
         "type": "http",
         "scheme": "bearer",
@@ -202,10 +501,10 @@
           }
         }
       },
-      "Boards": {
+      "Board": {
         "type": "object",
         "properties": {
-          "owner": {
+          "user": {
             "type": "string"
           },
           "name": {
@@ -224,6 +523,15 @@
             "type": "date"
           }
         }
+      },
+      "Card": {
+        "type": "object",
+        "properties": {
+          "description": {
+            "type": "string"
+          }
+        }
       }
-    }}
+    }
+  }
 }
