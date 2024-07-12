@@ -1,7 +1,10 @@
 import axios from "axios"
 import Cookies from "js-cookie"
+import dotenv from "dotenv";
 
-const baseURL = "https://kanbanana-54dp.onrender.com"
+
+dotenv.config();
+const baseURL = BASEURL
 
 export async function getBoardById(id) {
   console.log(id)
