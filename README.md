@@ -4,7 +4,7 @@ Para testar a aplicação localmente o primeiro passo é clonar o repositório a
 git clone https://github.com/yanocavalcante/Kanbanana.git
 git checkout dev
 ```
-Agora, vocẽ deve configurar um arquivo '.env', onde serão armazenadas as variáveis de ambiente para o funcionamento adequado do backend da aplicação. Siga o exemplo presente em '.env.example'
+Agora, vocẽ deve configurar dois arquivos '.env', onde serão armazenadas as variáveis de ambiente para o funcionamento adequado do backend e do frontend da aplicação. Siga os exemplos presentes em '.env.example'.
 
 Em seguida, é necessário, executar o código completo tanto do backend quanto do frontend. Para isso, abra duas janelas de linha de comando e prossiga, respectivamente, para as pastas 'client/' e 'server/', em seguida, em ambas execute os seguintes comandos:
 
